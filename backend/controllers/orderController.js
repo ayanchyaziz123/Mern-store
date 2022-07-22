@@ -11,14 +11,30 @@ const user = require('../models/user');
 
 
 
+exports.myOrders = async (req, res, next) =>{
+    try{
+        const userId = req.userId;
+        const orders = await Order.find({user: userId});
+        return res.status(200).json({
+            "orders": orders,
+        })
+    }
+    catch(error)
+    {
+        return res.status(400).json({
+            "error": error,
+        })
+    }
+}
+
 exports.orderDetails = async (req, res, next) =>{
     try{
         const id = req.params.id;
         const ord = await Order.findById({_id: id});
         const orderItems = await OrderItem.find({ order: id });
-        const shippingAddress = await Shipping.find({order: id});
+        const shippingAddress = await Shipping.findOne({order: id});
 
-        const user = await User.find({_id: ord.user})
+        const user = await User.findOne({_id: ord.user})
         const order = {
             orderItems: orderItems,
             order: ord,

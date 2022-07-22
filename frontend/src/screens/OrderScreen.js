@@ -72,6 +72,7 @@ function OrderScreen({ match, history }) {
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
     }
+    console.log("orders ", order);
 
     return loading ? (
         <Loader />
@@ -79,24 +80,24 @@ function OrderScreen({ match, history }) {
         <Message variant='danger'>{error}</Message>
     ) : (
                 <div className="large-devices-margin">
-                    <h1 className="text-white">Order: {order.Id}</h1>
+                    <h1>Order: {order.order._Id}</h1>
                     <Row>
                         <Col md={8}>
                             <ListGroup variant='flush'>
                                 <ListGroup.Item>
                                     <h2>Shipping</h2>
-                                    <p><strong>Name: </strong> {order.user[0].firstName}</p>
-                                    <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user[0].email}</a></p>
+                                    <p><strong>Name: </strong> {order.user.firstName}</p>
+                                    <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
                                     <p>
                                         <strong>Shipping: </strong>
-                                        {order.shippingAddress[0].address},  {order.shippingAddress[0].city}
+                                        {order.shippingAddress.address},  {order.shippingAddress.city}
                                         {'  '}
-                                        {order.shippingAddress[0].postalCode},
+                                        {order.shippingAddress.postalCode},
                                 {'  '}
-                                        {order.shippingAddress[0].country}
+                                        {order.shippingAddress.country}
                                     </p>
 
-                                    {order.isDelivered ? (
+                                    {order.order.isDelivered ? (
                                         <Message variant='success'>Delivered on {order.deliveredAt}</Message>
                                     ) : (
                                             <Message variant='warning'>Not Delivered</Message>
@@ -107,9 +108,9 @@ function OrderScreen({ match, history }) {
                                     <h2>Payment Method</h2>
                                     <p>
                                         <strong>Method: </strong>
-                                        {order.paymentMethod}
+                                        {order.order.paymentMethod}
                                     </p>
-                                    {order.isPaid ? (
+                                    {order.order.isPaid ? (
                                         <Message variant='success'>Paid on {order.paidAt}</Message>
                                     ) : (
                                             <Message variant='warning'>Not Paid</Message>
@@ -186,7 +187,7 @@ function OrderScreen({ match, history }) {
                                    
 
 
-                                    {!order.isPaid && (
+                                    {/* {!order.order.isPaid && (
                                         <ListGroup.Item>
                                             {loadingPay && <Loader />}
 
@@ -199,7 +200,12 @@ function OrderScreen({ match, history }) {
                                                     />
                                                 )}
                                         </ListGroup.Item>
-                                    )}
+                                    )} */}
+                                     <PayPalButton
+                                                        amount={order.totalPrice}
+                                                        onSuccess={successPaymentHandler}
+                                                    />
+                    
                                 </ListGroup>
                                 {loadingDeliver && <Loader />}
                                 {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (

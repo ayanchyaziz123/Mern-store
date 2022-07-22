@@ -34,7 +34,7 @@ const Navs2 = () =>{
                                 onClick={() => setKeyword('linux')}
                             >
                                 <div className="bg-info p-3 br"  >
-                                    <div className="text-center nav-text" ><i class="fab fa-linux"></i></div>
+                                    <div className="text-center nav-text" ><i class="fab fa-critical-role"></i></div>
                                     <div className="text-center">Rolex</div>
                                 </div>
                                 
@@ -50,7 +50,7 @@ const Navs2 = () =>{
                             onClick={() => setKeyword('apple')}
                         >
                             <div className="bg-info p-3 br" >
-                                <div className="text-center nav-text" ><i class="fab fa-apple"></i></div>
+                                <div className="text-center nav-text" ><i class="fab fa-bandcamp"></i></div>
                                 <div className="text-center">Balenciaga</div>
                             </div>
                         </Button>
@@ -67,7 +67,7 @@ const Navs2 = () =>{
                             onClick={() => setKeyword('android')}
                         >
                             <div className="bg-info p-3 br"  >
-                                <div className="text-center nav-text" ><i class="fab fa-android"></i></div>
+                                <div className="text-center nav-text" ><i class="fab fa-themeco"></i></div>
                                 <div className="text-center">Thom Browne</div>
                             </div>
                         </Button>
@@ -81,7 +81,7 @@ const Navs2 = () =>{
                             onClick={() => setKeyword('windows')}
                         >
                             <div className="bg-info p-3 br"  >
-                                <div className="text-center nav-text" ><i class="fab fa-windows"></i></div>
+                                <div className="text-center nav-text" ><i class="fas fa-pastafarianism"></i></div>
                                 <div className="text-center">Armani</div>
                             </div>
 

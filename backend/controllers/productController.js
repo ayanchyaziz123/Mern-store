@@ -137,7 +137,7 @@ exports.getProducts = async (req, res, next) => {
             const pages = Math.ceil(total / limit);
             const startIndex = (page - 1) * limit;
             const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex);
-            res.status(200).json(
+            return res.status(200).json(
                 {
                     success: true,
                     count: products.length,
@@ -155,7 +155,7 @@ exports.getProducts = async (req, res, next) => {
             const pages = Math.ceil(total / limit);
             const startIndex = (page - 1) * limit;
             const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex).exec();
-            res.status(200).json(
+            return res.status(200).json(
                 {
                     success: true,
                     count: products.length,
@@ -185,7 +185,7 @@ exports.getProducts = async (req, res, next) => {
                     ]
                 }
             ).sort({ 'update_at': -1 }).limit(limit).skip(startIndex).exec();
-            res.status(200).json(
+            return res.status(200).json(
                 {
                     success: true,
                     count: products.length,

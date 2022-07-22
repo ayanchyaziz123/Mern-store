@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col, Table, Container, Image } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../components/Loader'
-import Message from '../components/Message'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
-import { listMyOrders } from '../actions/orderActions'
+import Loader from '../../components/Loader'
+import Message from '../../components/Message'
+import { getUserDetails, updateUserProfile } from '../../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../../constants/userConstants'
+import { listMyOrders } from '../../actions/orderActions'
 import axios from 'axios'
 
 const baseURL = "http://localhost:4000/api/user/DPchange";
@@ -49,8 +49,6 @@ function ProfileScreen({ history }) {
             })
         
     }
-
-
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
