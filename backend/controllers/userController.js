@@ -8,6 +8,36 @@ const Token = require('../models/token');
 
 
 
+
+
+exports.UpdateUserDP = async (req, res, next) =>
+{
+    try {
+        console.log("I am 1")
+        const file = req.file.filename;
+        var id = req.userId
+        const filter = { _id: id };
+        console.log("I am 2", file);
+        const update = { profile_pic: file };
+        let user = await User.findOneAndUpdate(filter, update, {
+            new: true
+        });
+        console.log("success321");
+        return res.status(200).json({
+            "user": user,
+            "message": "successfully dp change"
+        });
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json({
+            "error": "an error happend"
+        })
+    }
+}
+
+
+
 exports.DeleteUser = async (request, response, next) => {
     try {
         const user = await User.findByIdAndRemove(request.params.id);
@@ -134,6 +164,7 @@ exports.GetUser = async (req, res, next) => {
     try {
         console.log("id   ", req.body.id);
         const id = req.userId;
+        console.log("profile ", id);
         const user = await User.findById(_id = id);
         console.log("users is here2 => ", user);
         return res.status(200).json({

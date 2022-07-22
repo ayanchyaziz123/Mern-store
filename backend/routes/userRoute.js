@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 var multer = require('multer');
 
-const {DeleteUser ,UpdateAdminUser ,GetAdminUser, UpdateUser, GetUser, getUsers ,SignUp, SignUp_verification, SignIn, ResetPassword, ResetPasswordVerification, UpdatePassword} = require('../controllers/userController');
+const {UpdateUserDP, DeleteUser ,UpdateAdminUser ,GetAdminUser, UpdateUser, GetUser, getUsers ,SignUp, SignUp_verification, SignIn, ResetPassword, ResetPasswordVerification, UpdatePassword} = require('../controllers/userController');
 const checkLogIn = require('../middleware/checkLogIn');
 
 const fileStorageEngine = multer.diskStorage({
@@ -31,6 +31,7 @@ router.route('/updatePassword/:id/:token').put(UpdatePassword)
 router.route('/updateUser').post(upload.single('image'), UpdateUser);
 router.route('/updateAdminUser').post(upload.single('image'), UpdateAdminUser);
 router.route('/deleteUser/:id').delete(DeleteUser);
+router.route('/DPchange').post(upload.single('profile_pic'), UpdateUserDP);
 
 
 module.exports = router;
