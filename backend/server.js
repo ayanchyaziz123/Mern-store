@@ -1,0 +1,61 @@
+const express = require('express')
+const path = require('path');
+const connectDatabase = require('./config/database');
+const cors = require("cors");
+const app = express();
+var bodyParser = require('body-parser');
+require('dotenv').config();
+
+
+
+
+// // for parsing application/json
+app.use(bodyParser.json()); 
+app.use(express.json());
+
+// // for parsing application/xwww-
+// app.use(bodyParser.urlencoded({ extended: true })); 
+// //form-urlencoded
+
+// // for parsing multipart/form-data
+
+// app.use(express.static('./public/uploads'));
+
+
+
+// // for parsing multipart/form-data
+
+app.use(express.static('./public/uploads'));
+
+connectDatabase();
+
+app.use(cors({ origin: true, credentials: true }));
+const user = require('./routes/userRoute');
+const product = require('./routes/productRoute');
+const order = require('./routes/orderRoute');
+
+
+
+
+
+
+// API for users
+app.use('/api/user', user);
+
+// API for users
+app.use('/api/product', product);
+
+
+// API for users
+app.use('/api/order', order);
+
+
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+const PORT = 4000
+app.listen(PORT, () => {
+    console.log(`Example app->> listening at http://localhost:${PORT}`)
+})
