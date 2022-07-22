@@ -107,7 +107,7 @@ function ProfileScreen({ history }) {
             <Row>
                 <Col md={2}>
 
-                    <Image src={`http://localhost:4000/${userInfo.profile_pic}`} width={140}
+                    <Image src={`http://localhost:4000/${userInfo ? userInfo.profile_pic : null}`} width={140}
                         height={140} rounded />
 
                     <Form.Group controlId='profile pic'>
