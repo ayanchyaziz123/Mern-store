@@ -10,21 +10,24 @@ const Token = require('../models/token');
 
 
 
-exports.UpdateUserDP = async (req, res, next) =>
-{
+exports.UpdateUserDP = async (req, res, next) => {
     try {
-        console.log("I am 1")
+
         const file = req.file.filename;
-        var id = req.userId
+        var id = req.userId;
         const filter = { _id: id };
-        console.log("I am 2", file);
         const update = { profile_pic: file };
-        let user = await User.findOneAndUpdate(filter, update, {
-            new: true
-        });
-        console.log("success321");
+        let user; 
+        try {
+            user = await User.findOneAndUpdate(filter, update, {
+                new: true
+            });
+        }
+        catch (error) {
+            console.log("error", error)
+        }
         return res.status(200).json({
-            "user": user,
+            "file_name": file,
             "message": "successfully dp change"
         });
     }
@@ -160,7 +163,7 @@ exports.UpdateUser = async (req, res, next) => {
 
 
 exports.GetUser = async (req, res, next) => {
-    
+
     try {
         console.log("id   ", req.body.id);
         const id = req.userId;
@@ -451,7 +454,7 @@ exports.UpdatePassword = async (req, res, next) => {
 }
 
 exports.SignIn = async (req, res, next) => {
-    const { email, password } =  req.body;
+    const { email, password } = req.body;
     const existingUser = await User.findOne({ email: email });
     if (!existingUser) return res.status(400).json({ error: "email does not exist" });
     const isValidPassword = await bcrypt.compare(password, existingUser.password);

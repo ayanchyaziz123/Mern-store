@@ -31,7 +31,7 @@ router.route('/updatePassword/:id/:token').put(UpdatePassword)
 router.route('/updateUser').post(upload.single('image'), UpdateUser);
 router.route('/updateAdminUser').post(upload.single('image'), UpdateAdminUser);
 router.route('/deleteUser/:id').delete(DeleteUser);
-router.route('/DPchange').post(upload.single('profile_pic'), UpdateUserDP);
+router.route('/DPchange').post(upload.single('profile_pic'),checkLogIn, UpdateUserDP);
 
 
 module.exports = router;

@@ -5,7 +5,7 @@ const Loaders = () => {
     return (
         <Loader
             type="Rings"
-            color="#ffffff"
+            color="black"
             height={150}
             width={150}
             timeout={3000} //3 secs

@@ -38,30 +38,46 @@ function ProfileScreen({ history }) {
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
     const handleFile = (e) => {
- 
-            const formData = new FormData();
-            formData.append('profile_pic', e.target.files[0])
-            alert("handle");
-            axios.post(baseURL, formData).then((resp) => {
-                dispatch(getUserDetails('profile'));
-            }).catch(error =>{
-                setErr(error.response);
-            })
-        
+
+        const formData = new FormData();
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        formData.append('profile_pic', e.target.files[0])
+        axios.post(baseURL, formData, config).then((res) => {
+            const data = res.data.file_name;
+            // Get the existing data
+            var existing = localStorage.getItem('userInfo');
+
+            // If no existing data, create an array
+            // Otherwise, convert the localStorage string to an array
+            existing = existing ? JSON.parse(existing) : {};
+            // Add new data to localStorage Array
+            existing['profile_pic'] = data;
+            // Save back to localStorage
+            localStorage.setItem('userInfo', JSON.stringify(existing));
+            window.location.reload();
+        }).catch(error => {
+            setErr(error.response);
+        })
+
     }
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
         } else {
-          
+
             if (!user || !user.firstName || success || userInfo._id !== user._id) {
-    
+
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
                 dispatch(listMyOrders())
 
             } else {
-            
+
                 setFirstName(user.firstName)
                 setLastName(user.lastName)
                 setEmail(user.email)
@@ -90,7 +106,7 @@ function ProfileScreen({ history }) {
         <div className="large-devices-margin">
             <Row>
                 <Col md={2}>
-                   
+
                     <Image src={`http://localhost:4000/${userInfo.profile_pic}`} width={140}
                         height={140} rounded />
 
