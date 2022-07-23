@@ -123,7 +123,9 @@ exports.getProduct = async (req, res, next) => {
     }
     catch (error) {
         console.log(error)
-        res.status(400).send("An error occured");
+        res.status(400).json({
+            detail: "serevr error. Could not retrive the data!!!"
+        });
     }
 }
 
@@ -235,7 +237,7 @@ exports.getProducts = async (req, res, next) => {
     catch (error) {
         console.log("error", error);
         res.status(500).json({
-            message: "server error"
+            detail: "server could not load the data in proper time!"
         });
 
     }

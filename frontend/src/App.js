@@ -26,10 +26,12 @@ import DashboardScreen from './screens/DashboardScreen'
 import Header2 from './components/Header2';
 import OTPScreen from './screens/OTPScreen';
 import RegisterScreen2 from './screens/auth/RegisterScreen2'
-import ResetPassword from './screens/ResetPassword';
+import ResetPassword from './screens/auth/ResetPassword';
 import AdminContactScreen from './screens/AdminContactScreen';
 import BrandScreen from './screens/BrandScreen';
 import EmailVerifyScreen from './screens/auth/EmailVerifyScreen'
+import ConfirmPassword from './screens/auth/ConfirmPassword'
+
 
 
 function App() {
@@ -43,6 +45,7 @@ function App() {
         <Container>
           <Route path='/' component={HomeScreen} exact />
           <Route path='/login' component={LoginScreen} />
+          <Route path='/api/user/password/verify/:id/:token' component={ConfirmPassword} />
           <Route path='/register' component={RegisterScreen} />
         <Route path='/register2' component={RegisterScreen2} />
         <Route path='/api/user/verify/:id/:token' component={EmailVerifyScreen} />

@@ -111,7 +111,7 @@ function ProductScreen({ match, history }) {
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <Rating value={total/product.review.length} text={`${product.review.length} reviews`} color={'#f8e825'} />
+                                            <Rating value={total / product.review ? product.review.length : null} text={`${product.review ? product.review.length : null} reviews`} color={'#f8e825'} />
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>

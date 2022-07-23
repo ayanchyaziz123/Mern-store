@@ -32,7 +32,7 @@ function ProfileScreen({ history }) {
     const { userInfo } = userLogin
 
     const userUpdateProfile = useSelector(state => state.userUpdateProfile)
-    const { success } = userUpdateProfile
+    const { success, wrong, msg } = userUpdateProfile
 
     const orderListMy = useSelector(state => state.orderListMy)
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
@@ -125,7 +125,9 @@ function ProfileScreen({ history }) {
                     <h2 >User Profile</h2>
 
                     {message && <Message variant='danger'>{message}</Message>}
+                    {msg && <Message variant='success'>{msg}</Message>}
                     {error && <Message variant='danger'>{error}</Message>}
+                    {wrong && <Message variant='danger'>{wrong}</Message>}
                     {loading && <Loader />}
                     <Form onSubmit={submitHandler}>
 

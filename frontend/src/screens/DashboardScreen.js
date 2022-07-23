@@ -26,21 +26,21 @@ const DashboardScreen = ({history}) =>{
 
     useEffect(() => {
 
-        // if (!userInfo) {
-        //         history.push('/login')
-        // }
-        // else{
-        //     if(!userInfo.isAdmin)
-        //     {
-        //         history.push('/')
-        //     }
+        if (!userInfo) {
+                history.push('/login')
+        }
+        else{
+            if(!userInfo.isAdmin)
+            {
+                history.push('/')
+            }
             axios.get(baseURL).then(response=>{
                 setNewCustomers(response.data.new_users);
                 setPendingOrders(response.data.pending_orders);
                 setRevenue(response.data.revenue);
                 setProfit(response.data.profit);
             })
-        //}
+        }
 
     }, [history, userInfo])
 

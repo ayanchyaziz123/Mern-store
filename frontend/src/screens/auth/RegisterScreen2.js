@@ -57,10 +57,10 @@ function RegisterScreen2({ location, history }) {
                     setMessage(response.data.message);
                     setSuccess(true);  
                 }).catch(error =>{
-                    setError(error.response.data.error);
+                    setError(error.response && error.response.data.detail
+                        ? error.response.data.detail
+                        : "network error");
                 })
-               
-            
             setLoadding(false)
             
         }

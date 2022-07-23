@@ -24,7 +24,9 @@ const EmailVerifyScreen = ({match, history}) =>{
             })
         }
         catch (error) {
-            setError(error.response.data.error);
+            setError(error.response && error.response.data.detail
+                ? error.response.data.detail
+                : "network error");
         }
     }, [id, token, userInfo])
 

@@ -146,8 +146,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             }
         }
 
-        console.log("i am called")
-
         const { data } = await axios.get(
             `http://localhost:4000/api/user/userProfile/${id}`,
             config
@@ -234,7 +232,7 @@ export const listUsers = () => async (dispatch, getState) => {
         }
 
         const { data } = await axios.get(
-            `/api/users/`,
+            `http://localhost:4000/api/user`,
             config
         )
 

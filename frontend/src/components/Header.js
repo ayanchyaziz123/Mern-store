@@ -90,14 +90,14 @@ function Header() {
                             )}
 
 
-                            {userInfo && (
+                            {userInfo && userInfo.isAdmin ? (
                                 <>
                                     <LinkContainer to='/dashboard'>
                                         <Nav.Link>Dashboard</Nav.Link>
                                     </LinkContainer>
                                 </>
 
-                            )}
+                            ) : null}
 
 
                         </Nav>

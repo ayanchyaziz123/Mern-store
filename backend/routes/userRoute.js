@@ -20,7 +20,7 @@ const fileStorageEngine = multer.diskStorage({
   // You can create multiple middleware each with a different storage engine config so save different files in different locations on server
   const upload = multer({ storage: fileStorageEngine });
 
-router.route('').get(getUsers);  
+router.route('').get(checkLogIn ,getUsers);  
 router.route('/userDetails/:id').get(GetAdminUser); // for admin
 router.route('/userProfile/:id').get(checkLogIn, GetUser); // for user
 router.route('/signUp').post(upload.single('profile_pic'),SignUp);
