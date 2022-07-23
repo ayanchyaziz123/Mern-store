@@ -40,7 +40,6 @@ exports.createReview = async (req, res, next) => {
        const productRelated = await Product.findById(productId);
        productRelated.review.push(review);
        productRelated.save();
-       console.log("product is on reviewed ", productRelated);
           // save and redirect...
         const rev = await Review.find({ product: productId }).populate('user');
         return res.status(200).json({
@@ -173,7 +172,7 @@ exports.getProducts = async (req, res, next) => {
             const total = await Product.countDocuments();
             const pages = Math.ceil(total / limit);
             const startIndex = (page - 1) * limit;
-            const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex);
+            const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex).populate('review');
             return res.status(200).json(
                 {
                     success: true,
@@ -191,7 +190,7 @@ exports.getProducts = async (req, res, next) => {
             const total = await Product.countDocuments();
             const pages = Math.ceil(total / limit);
             const startIndex = (page - 1) * limit;
-            const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex).exec();
+            const products = await Product.find().sort({ 'update_at': -1 }).limit(limit).skip(startIndex).populate('review').exec();
             return res.status(200).json(
                 {
                     success: true,
@@ -221,7 +220,7 @@ exports.getProducts = async (req, res, next) => {
                         { name: { $regex: query } },
                     ]
                 }
-            ).sort({ 'update_at': -1 }).limit(limit).skip(startIndex).exec();
+            ).sort({ 'update_at': -1 }).limit(limit).skip(startIndex).populate('review').exec();
             return res.status(200).json(
                 {
                     success: true,
