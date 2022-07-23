@@ -293,7 +293,7 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
         }
 
         const { data } = await axios.post(
-            `/api/products/${productId}/reviews/`,
+            `http://localhost:4000/api/product/${productId}/createReview`,
             review,
             config
         )

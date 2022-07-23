@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
+const Review = require('../models/review');
 
 
 
@@ -21,6 +22,41 @@ exports.imageUpload = async (req, res, next) => {
         })
     }
 }
+
+exports.createReview = async (req, res, next) => {
+    try {
+        const { rating, comment  } = req.body;
+        const productId = mongoose.Types.ObjectId(req.params.id);
+        const userId = req.userId;
+        const review = new Review({
+            product: productId,
+            user: userId,
+            rating: rating,
+            comment: comment
+        });
+       // save comment
+       await review.save();
+       // get this particular post
+       const productRelated = await Product.findById(productId);
+       productRelated.review.push(review);
+       productRelated.save();
+       console.log("product is on reviewed ", productRelated);
+          // save and redirect...
+        const rev = await Review.find({ product: productId }).populate('user');
+        return res.status(200).json({
+            "review": rev
+        });
+          
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json({
+            "error": "an error happend"
+        })
+    }
+}
+
+
 
 
 exports.offerProduct = async (req, res, next) => {
@@ -79,11 +115,12 @@ exports.createProduct = async (req, res, next) => {
 }
 
 exports.getProduct = async (req, res, next) => {
-    console.log("id ", req.params.id);
     try {
         const product = await Product.findById(_id = req.params.id)
+        const reviews = await Review.find({ product: product._id }).populate('user');
         return res.status(200).json({
             "product": product,
+            "reviews": reviews
         })
     }
     catch (error) {

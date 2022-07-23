@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var multer = require('multer');
+const checkLogIn = require('../middleware/checkLogIn');
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -16,7 +17,7 @@ const fileStorageEngine = multer.diskStorage({
   // You can create multiple middleware each with a different storage engine config so save different files in different locations on server
   const upload = multer({ storage: fileStorageEngine });
 
-const {getProducts, createProduct, getProduct, imageUpload, updateProduct, offerProduct, deleteProduct} = require('../controllers/productController');
+const {createReview ,getProducts, createProduct, getProduct, imageUpload, updateProduct, offerProduct, deleteProduct} = require('../controllers/productController');
 
 
 router.route('').get(getProducts);
@@ -26,5 +27,6 @@ router.route('/imageUpload').post(upload.single('image'), imageUpload);
 router.route('/updateProduct/:id').put(updateProduct);
 router.route('/deleteProduct/:id').delete(deleteProduct);
 router.route('/offerProduct').get(offerProduct);
+router.route('/:id/createReview').post(checkLogIn ,createReview);
 
 module.exports = router;

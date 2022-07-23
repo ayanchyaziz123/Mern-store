@@ -32,7 +32,7 @@ function ProductScreen({ match, history }) {
     const dispatch = useDispatch()
 
     const productDetails = useSelector(state => state.productDetails)
-    const { loading, error, product, price_history } = productDetails
+    const { loading, error, product, price_history, reviews } = productDetails
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -44,9 +44,9 @@ function ProductScreen({ match, history }) {
         success: successProductReview,
     } = productReviewCreate
 
-    const product_id = product._id;
+    const product_id = product ? product._id : null;
    
-
+     console.log("review ", reviews);
     useEffect(() => {
         if (successProductReview) {
             setRating(0)
@@ -56,7 +56,7 @@ function ProductScreen({ match, history }) {
 
         dispatch(listProductDetails(match.params.id))
 
-    }, [dispatch, match, successProductReview])
+    }, [dispatch, match, successProductReview, reviews])
 
     const addToCartHandler = () => {
         console.log("product Ids", match.params.id)
@@ -71,23 +71,6 @@ function ProductScreen({ match, history }) {
             comment
         }
         ))
-    }
-    console.log("price : ", price_history);
-    const predict_future_price_submit = (e) =>{
-        e.preventDefault()
-        if(product._id && date)
-        {   
-            console.log("hello", product_id, date)
-            axios.post(baseURL, {
-                date,
-                product_id
-
-            }).then((response)=>{
-                setPredict_price(response.data);
-            })
-        }
-    
-
     }
 
     return (
@@ -138,32 +121,7 @@ function ProductScreen({ match, history }) {
                                         <br></br>
 
 
-                                            <Button variant="primary" size="sm" className="mt-2" onClick={handleShow}>
-                                                predict future price
-                                            </Button>
-
-                                            <Modal show={show} onHide={handleClose}>
-                                                <Modal.Header className="bg-dark" closeButton>
-                                                    <Modal.Title className="text-white">Predict future price of {product.name}</Modal.Title>
-                                                </Modal.Header>
-                                                <Modal.Body>
-                                                    <span >enter the date where you can predict the price of this laptop</span>
-                                                    <Form onSubmit={predict_future_price_submit}>
-                                                    <Form.Control type="date" size="sm" className="mb-2 mt-2" name="date" onChange={(e)=>{setDate(e.target.value)}}/>
-                                                        <h3>{predictPrice ? 'Predict Price : ' + parseFloat(predictPrice).toFixed(2) : null}</h3>
-                                                    <Button type="submit" size="sm" className="mt-3">Predict</Button>
-                                                    </Form>
-                                                </Modal.Body>
-                                                <Modal.Footer>
-                    
-                                                </Modal.Footer>
-                                            </Modal>
-                                      
-
-
-
-
-
+        
 
                                         </ListGroup.Item>
 
@@ -171,32 +129,11 @@ function ProductScreen({ match, history }) {
                                     
 
                                         <ListGroup.Item>
-                                            <p>Model: {product.model}</p>
+                                            <p>Name: {product.name}</p>
                                             <hr></hr>
                                             <p>Category: {product.category}</p>
                                             <hr></hr>
-                                            <p>Processor: {product.processor}</p>
-                                            <hr></hr>
-                                            <p>Display: {product.display}</p>
-                                            <hr></hr>
-                                            <p>Graphics: {product.graphics_card}</p>
-                                            <hr></hr>
-                                            <p>Ram: {product.ram_memory}</p>
-                                            <hr></hr>
-                                            <p>OS: {product.operating_system}</p>
-                                            <hr></hr>
-                                            <p>Storage: {product.storage}</p>
-                                            <hr></hr>
-                                            <p>Web Cam: {product.web_cam}</p>
-                                            <hr></hr>
-                                            <p> Color: {product.color}</p>
-                                            <hr></hr>
-                                            <p>Battery: {product.battery}</p>
-                                            <hr></hr>
-                                            <p>Weight: {product.weight}</p>
-                                            <hr></hr>
-                                            <p>Warranty: {product.warranty}</p>
-                                            <hr></hr>
+                                           
                                         </ListGroup.Item>
                                     </ListGroup>
                                    
@@ -274,12 +211,12 @@ function ProductScreen({ match, history }) {
                                    
                                     <Card className="p-2 border border-white">
                                     <h4>Reviews</h4>
-                                    {product.reviews &&  product.reviews.length === 0 && <Message variant='info' size="sm">No Reviews</Message>}
+                                    {reviews &&  reviews.length === 0 && <Message variant='info' size="sm">No Reviews</Message>}
 
                                     <ListGroup variant='flush'>
-                                        {product.reviews && product.reviews.map((review) => (
+                                        {reviews && reviews.map((review) => (
                                             <ListGroup.Item key={review._id}>
-                                                <strong>{review.name}</strong>
+                                                <strong>{review.user.firstName}</strong>
                                                 <Rating value={review.rating} color='#f8e825' />
                                                 <p>{review.createdAt.substring(0, 10)}</p>
                                                 <p>{review.comment}</p>

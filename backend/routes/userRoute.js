@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 var multer = require('multer');
+const checkLogIn = require('../middleware/checkLogIn');
 
 const {UpdateUserDP, DeleteUser ,UpdateAdminUser ,GetAdminUser, UpdateUser, GetUser, getUsers ,SignUp, SignUp_verification, SignIn, ResetPassword, ResetPasswordVerification, UpdatePassword} = require('../controllers/userController');
-const checkLogIn = require('../middleware/checkLogIn');
+
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
