@@ -114,7 +114,7 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getProduct = async (req, res, next) => {
     try {
-        const product = await Product.findById(_id = req.params.id)
+        const product = await Product.findById(_id = req.params.id).populate('review');
         const reviews = await Review.find({ product: product._id }).populate('user');
         return res.status(200).json({
             "product": product,

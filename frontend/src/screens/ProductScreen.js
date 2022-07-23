@@ -45,8 +45,8 @@ function ProductScreen({ match, history }) {
     } = productReviewCreate
 
     const product_id = product ? product._id : null;
-   
-     console.log("review ", reviews);
+    var total = product && product.review && product.review.length > 0 ? product.review.reduce((accum,item) => accum + item.rating, 0) : 0;
+    
     useEffect(() => {
         if (successProductReview) {
             setRating(0)
@@ -112,7 +112,7 @@ function ProductScreen({ match, history }) {
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
+                                            <Rating value={total/product.review.length} text={`${product.review.length} reviews`} color={'#f8e825'} />
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
