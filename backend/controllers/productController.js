@@ -34,12 +34,11 @@ exports.createReview = async (req, res, next) => {
             rating: rating,
             comment: comment
         });
-       // save comment
        await review.save();
-       // get this particular post
-       const productRelated = await Product.findById(productId);
-       productRelated.review.push(review);
-       productRelated.save();
+       await Product.findOneAndUpdate({_id:productId}, {$push: {
+        "review": review
+       }});
+       console.log("success");
           // save and redirect...
         const rev = await Review.find({ product: productId }).populate('user');
         return res.status(200).json({

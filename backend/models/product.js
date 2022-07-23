@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
     },
     review: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'review'
+        ref: 'review',
       }],
     image: {
         type: String
