@@ -40,6 +40,7 @@ function App() {
 
 
       <main className="py-3 mt-5 ">
+        <Container>
           <Route path='/' component={HomeScreen} exact />
           <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} />
@@ -70,6 +71,7 @@ function App() {
           <Route path='/dashboard' component={DashboardScreen} />
         <Route path='/admin/contact' component={AdminContactScreen} />
         <Route path="/brand" component={BrandScreen} />
+        </Container>
           
       
       </main>

@@ -8,7 +8,7 @@ function Product({ product }) {
     var total = product && product.review && product.review.length > 0 ? product.review.reduce((accum,item) => accum + item.rating, 0) : 0;
     return (
         <div className="card my-2 p-2 text-center">
-            <strong className="ct">{product.rating > 2 && product.numReviews > 0 ? <span class="badge badge-warning"><i class="fas fa-star"></i> TOP REVIEWED</span> : <br></br> }</strong>
+            <strong className="ct">{product.review.length > 0  ? <span class="badge badge-info"><i class="fas fa-star"></i> TOP REVIEWED</span> : <br></br> }</strong>
             <Link to={`/product/${product._id}`}>
                 <Card.Img src={`http://localhost:4000/${product.image}`} className="img-fluid ps rounded mx-auto d-block"/>
             </Link>

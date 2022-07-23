@@ -187,8 +187,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.put(
-            `/api/users/profile/update/`,
+        const { data } = await axios.post(
+            `http://localhost:4000/api/user/updateUser`,
             user,
             config
         )
@@ -202,8 +202,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
-
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        const tkn = data.userInfo;
+        localStorage.setItem('userInfo', JSON.stringify(tkn))
 
     } catch (error) {
         dispatch({

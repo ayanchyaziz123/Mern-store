@@ -79,7 +79,7 @@ function OrderScreen({ match, history }) {
     ) : error ? (
         <Message variant='danger'>{error}</Message>
     ) : (
-                <div className="large-devices-margin">
+                <div>
                     <h1>Order: {order.order._Id}</h1>
                     <Row>
                         <Col md={8}>

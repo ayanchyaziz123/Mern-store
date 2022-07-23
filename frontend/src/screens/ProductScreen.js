@@ -74,10 +74,9 @@ function ProductScreen({ match, history }) {
     }
 
     return (
-        <div className="large-devices-margin">
+        <div>
             
           
-        <Coupon />
                
             {loading ?
                 <Loader />
@@ -89,7 +88,7 @@ function ProductScreen({ match, history }) {
                                 <Col md={6}>
                                     
                             
-                                            <Image src={`http://localhost:4000/${product.image}`} alt={product.name} fluid rounded />
+                                            <Image style={{maxHeight: '400px'}} src={`http://localhost:4000/${product.image}`} alt={product.name} fluid rounded />
                                       
                                     <Card className="p-2 mt-4 border border-white">
                                         <div>Description: {ReactHtmlParser(product.description)}</div>

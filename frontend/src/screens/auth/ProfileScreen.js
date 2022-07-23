@@ -89,12 +89,12 @@ function ProfileScreen({ history }) {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        if (password != confirmPassword) {
-            setMessage('Passwords do not match')
+        if (!password) {
+            setMessage('did not give password')
         } else {
             dispatch(updateUserProfile({
-                'id': user._id,
                 'firstName': firstName,
+                'lastName': lastName,
                 'email': email,
                 'password': password,
             }))
@@ -103,7 +103,7 @@ function ProfileScreen({ history }) {
 
     }
     return (
-        <div className="large-devices-margin">
+        <div>
             <Row>
                 <Col md={2}>
 

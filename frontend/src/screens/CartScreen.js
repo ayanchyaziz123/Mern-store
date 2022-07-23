@@ -29,7 +29,7 @@ function CartScreen({ match, location, history }) {
     }
 
     return (
-        <Container>
+     
         <Row>
             <Col md={8}>
                 <h1>Shopping Cart</h1>
@@ -122,7 +122,6 @@ function CartScreen({ match, location, history }) {
                 </Card>
             </Col>
         </Row>
-        </Container>
     )
 }
 

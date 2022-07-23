@@ -64,7 +64,7 @@ const DashboardScreen = ({history}) =>{
 
 
     return(
-        <div className="large-devices-margin">
+        <div>
             <h3>Dashboard SCreen</h3>
             <Row>
                 <Col md={3}>

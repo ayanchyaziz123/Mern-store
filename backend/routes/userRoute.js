@@ -29,7 +29,7 @@ router.route('/signIn').post(SignIn);
 router.route('/resetPassword').post(ResetPassword);
 router.route('/resetPassword_verification/:id/:token').get(ResetPasswordVerification);
 router.route('/updatePassword/:id/:token').put(UpdatePassword)
-router.route('/updateUser').post(upload.single('image'), UpdateUser);
+router.route('/updateUser').post(checkLogIn ,UpdateUser);
 router.route('/updateAdminUser').post(upload.single('image'), UpdateAdminUser);
 router.route('/deleteUser/:id').delete(DeleteUser);
 router.route('/DPchange').post(upload.single('profile_pic'),checkLogIn, UpdateUserDP);
