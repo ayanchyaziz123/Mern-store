@@ -10,6 +10,36 @@ const Token = require('../models/token');
 
 
 
+
+exports.DPchangeByAdmin = async (req, res, next) => {
+    try {
+
+        const file = req.file.filename;
+        const { userId } = req.body;
+        var id = mongoose.Types.ObjectId(userId);
+        const filter = { _id: id };
+        const update = { profile_pic: file };
+        let user;
+        try {
+            user = await User.findOneAndUpdate(filter, update, {
+                new: true
+            });
+        }
+        catch (error) {
+            console.log("error", error)
+        }
+        return res.status(200).json({
+            "message": "successfully dp change"
+        });
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json({
+            "error": "an error happend"
+        })
+    }
+}
+
 exports.UpdateUserDP = async (req, res, next) => {
     try {
 
@@ -63,31 +93,17 @@ exports.DeleteUser = async (request, response, next) => {
 exports.UpdateAdminUser = async (req, res, next) => {
     try {
         const { userId, firstName, lastName, email, verified, isAdmin } = req.body;
-        let user;
-        if (!req.filename) {
-            user = {
-                firstName: firstName,
-                lastName: lastName,
-                verified: verified,
-                isAdmin: isAdmin
-            }
-        }
-        else {
-            user = {
-                firstName: firstName,
-                lastName: lastName,
-                verified: verified,
-                isAdmin: isAdmin,
-                profile_pic: req.file.filename
-            }
-
+        let user = {
+            firstName: firstName,
+            lastName: lastName,
+            verified: verified,
+            isAdmin: isAdmin
         }
         const id = mongoose.Types.ObjectId(userId);
         const filter = { _id: id }
         let updateUser = await User.findOneAndUpdate(filter, user, {
             new: true
         });
-
         return res.status(200).json({
             "user": updateUser,
             "message": "Update successfully"
@@ -96,7 +112,7 @@ exports.UpdateAdminUser = async (req, res, next) => {
     }
     catch (error) {
         return res.status(400).json({
-            "error": "error occured"
+            detail: "Server error"
         })
 
     }
@@ -153,25 +169,20 @@ exports.UpdateUser = async (req, res, next) => {
 exports.GetUser = async (req, res, next) => {
 
     try {
-        console.log("id   ", req.body.id);
-        const id = req.userId;
-        console.log("profile ", id);
+        const id = req.userId;;
         const user = await User.findById(_id = id);
         console.log("users is here2 => ", user);
         return res.status(200).json({
             "user": user,
             "message": "Profile Loaded!"
         })
-
     }
     catch (err) {
-        console.log("error is here => ", err);
-        return res.status(400).json({ error: "error occured" });
+        return res.status(400).json({ detail: "error occured" });
     }
 }
 
 exports.GetAdminUser = async (req, res, next) => {
-    console.log("id", req.params.id);
     try {
         const user = await User.findById(_id = req.params.id);
         return res.status(200).json({
@@ -182,7 +193,7 @@ exports.GetAdminUser = async (req, res, next) => {
     }
     catch (err) {
         console.log("error is here => ", err);
-        return res.status(400).json({ error: "error occured" });
+        return res.status(400).json({ detail: "error occured" });
     }
 }
 
@@ -454,31 +465,38 @@ exports.UpdatePassword = async (req, res, next) => {
 }
 
 exports.SignIn = async (req, res, next) => {
-    const { email, password } = req.body;
-    const existingUser = await User.findOne({ email: email });
-    if (!existingUser) return res.status(400).json({ detail: "email does not exist" });
-    const isValidPassword = await bcrypt.compare(password, existingUser.password);
-    if (!isValidPassword) return res.status(400).json({ detail: "password does not match" });
+    try {
+        const { email, password } = req.body;
+        const existingUser = await User.findOne({ email: email });
+        if (!existingUser) return res.status(400).json({ detail: "email does not exist" });
+        const isValidPassword = await bcrypt.compare(password, existingUser.password);
+        if (!isValidPassword) return res.status(400).json({ detail: "password does not match" });
 
 
-    const token = jwt.sign({
-        email: existingUser.email,
-        userId: existingUser._id
-    }, process.env.KEY, {
-        expiresIn: '1h'
-    })
-    const user_info = {
-        firstName: existingUser.firstName,
-        lastName: existingUser.lastName,
-        _id: existingUser._id,
-        email: existingUser.email,
-        isAdmin: existingUser.isAdmin,
-        profile_pic: existingUser.profile_pic,
-        token: token
+        const token = jwt.sign({
+            email: existingUser.email,
+            userId: existingUser._id
+        }, process.env.KEY, {
+            expiresIn: '1h'
+        })
+        const user_info = {
+            firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
+            _id: existingUser._id,
+            email: existingUser.email,
+            isAdmin: existingUser.isAdmin,
+            profile_pic: existingUser.profile_pic,
+            token: token
+        }
+        console.log("success")
+        return res.status(200).json({
+            "userInfo": user_info,
+            "message": "logIn successfully"
+        })
     }
-    console.log("success")
-    return res.status(200).json({
-        "userInfo": user_info,
-        "message": "logIn successfully"
-    })
+    catch (error) {
+        return res.status(400).json({
+            detail: "Server error"
+        });
+    }
 }

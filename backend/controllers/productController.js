@@ -18,8 +18,8 @@ exports.imageUpload = async (req, res, next) => {
     catch (error) {
         console.log(error)
         res.status(400).json({
-            "error": "an error happend"
-        })
+            detail: "serevr error"
+        });
     }
 }
 
@@ -49,8 +49,8 @@ exports.createReview = async (req, res, next) => {
     catch (error) {
         console.log(error)
         res.status(400).json({
-            "error": "an error happend"
-        })
+            detail: "serevr error"
+        });
     }
 }
 
@@ -67,8 +67,8 @@ exports.offerProduct = async (req, res, next) => {
     }
     catch (error) {
         res.status(400).json({
-            "error": "an error happend"
-        })
+            detail: "serevr error"
+        });
     }
 }
 
@@ -84,8 +84,8 @@ exports.deleteProduct = async (req, res, next) => {
     }
     catch (error) {
         res.status(400).json({
-            "error": "an error happend"
-        })
+            detail: "serevr error"
+        });
     }
 }
 
@@ -108,7 +108,9 @@ exports.createProduct = async (req, res, next) => {
     }
     catch (error) {
         console.log(error)
-        res.status(400).send("An error occured");
+        res.status(400).json({
+            detail: "serevr error"
+        });
     }
 }
 
