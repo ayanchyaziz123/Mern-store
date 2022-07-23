@@ -255,9 +255,8 @@ export const listOrders = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-
         const { data } = await axios.get(
-            `/api/orders/`,
+            `http://localhost:4000/api/order/allOrders`,
             config
         )
 

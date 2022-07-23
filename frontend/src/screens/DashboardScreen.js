@@ -77,7 +77,7 @@ const DashboardScreen = ({history}) =>{
                     >
                         <Card.Header className="nav-text"><i class="fas fa-money-check "></i> Revenue</Card.Header>
                         <Card.Body>
-                            <Card.Title>{revenue} </Card.Title>
+                            <Card.Title>10000019199191 </Card.Title>
     
                         </Card.Body>
                     </Card>     
@@ -91,7 +91,7 @@ const DashboardScreen = ({history}) =>{
                     <div style={{ marginBottom: "100px" }}>
 
                     </div>
-                    <Todolist/>
+               
 
                 </Col>
                 <Col md={2}>
@@ -101,7 +101,7 @@ const DashboardScreen = ({history}) =>{
                     >
                         <Card.Header className="nav-text"><i class="fas fa-shopping-cart"></i> Pending Orders </Card.Header>
                         <Card.Body>
-                            <Card.Title>{pendingOrders} </Card.Title>
+                            <Card.Title>32211 </Card.Title>
                 
                         </Card.Body>
                     </Card>
@@ -115,7 +115,7 @@ const DashboardScreen = ({history}) =>{
                     >
                         <Card.Header className="nav-text"><i class="fas fa-users"></i> New Customers</Card.Header>
                         <Card.Body>
-                            <Card.Title>{newCustomers} </Card.Title>
+                            <Card.Title>92121921 </Card.Title>
                         </Card.Body>
                     </Card>
                 </Col>

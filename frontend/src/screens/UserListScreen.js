@@ -67,7 +67,7 @@ function UserListScreen({ history }) {
                                 {users.map(user => (
                                     <tr key={user._id}>
                                         <td>{user._id}</td>
-                                        <td>{user.name}</td>
+                                        <td>{user.firstName}</td>
                                         <td>{user.email}</td>
                                         <td>{user.isAdmin ? (
                                             <i className='fas fa-check' style={{ color: 'green' }}></i>
@@ -76,15 +76,15 @@ function UserListScreen({ history }) {
                                             )}</td>
 
                                         <td>
-                                            <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                                            <LinkContainer to={`/admin/user/${user._id}/edit`} disabled={userInfo._id == user._id ? true : false}>
                                                 <Button variant='light' className='btn-sm'>
                                                     <i className='fas fa-edit'></i>
                                                 </Button>
                                             </LinkContainer>
 
-                                            <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(user._id)}>
+                                            {/* <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(user._id)}>
                                                 <i className='fas fa-trash'></i>
-                                            </Button>
+                                            </Button> */}
                                         </td>
                                     </tr>
                                 ))}

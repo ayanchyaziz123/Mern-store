@@ -5,7 +5,7 @@ import AdminSideBar from '../admin_components/AdminSideBar';
 const BrandScreen = () => {
 
     return (
-        <div className='large-devices-margin'>
+        <div>
             <h3>Brand screen</h3>
             <Row>
                 <Col md={3}>

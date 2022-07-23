@@ -79,7 +79,7 @@ const SideBar = (history) => {
                     </NavLink>
                 </Nav.Item>
                 <hr></hr>
-                <Nav.Item>
+                {/* <Nav.Item>
                     <NavLink
                         className="navbar-item h5 font-weight-bold ml-3 text-white"
                         activeClassName="is-active"
@@ -88,7 +88,7 @@ const SideBar = (history) => {
                     >
                         <i class="fas fa-file-signature"></i> Contacts
                     </NavLink>
-                </Nav.Item>
+                </Nav.Item> */}
                 <hr></hr>
                 <Nav.Item>
                     <Link

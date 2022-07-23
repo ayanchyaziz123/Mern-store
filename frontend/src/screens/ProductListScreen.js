@@ -57,7 +57,7 @@ function ProductListScreen({ history, match }) {
     }
 
     return (
-        <div className="large-devices-margin">
+        <div>
             <Row className='align-items-center'>
                 <Col>
                     <h1>Products Screen</h1>

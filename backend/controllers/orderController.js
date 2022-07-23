@@ -11,6 +11,24 @@ const user = require('../models/user');
 
 
 
+
+exports.allOrders = async (req, res, next) =>{
+    try{
+        const orders = await Order.find().populate('user');
+        console.log("orders ", orders)
+        return res.status(200).json({
+            "orders": orders,
+        })
+    }
+    catch(error)
+    {
+        return res.status(400).json({
+            detail: "serevr error",
+        })
+    }
+}
+
+
 exports.myOrders = async (req, res, next) =>{
     try{
         const userId = req.userId;
@@ -22,7 +40,7 @@ exports.myOrders = async (req, res, next) =>{
     catch(error)
     {
         return res.status(400).json({
-            "error": error,
+            detail: "server error",
         })
     }
 }

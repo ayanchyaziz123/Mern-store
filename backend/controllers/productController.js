@@ -14,6 +14,9 @@ exports.imageUpload = async (req, res, next) => {
         let product = await Product.findOneAndUpdate(filter, update, {
             new: true
         });
+        return res.status(200).json({
+            image: file,
+        })
     }
     catch (error) {
         console.log(error)

@@ -59,9 +59,12 @@ function ProfileScreen({ history }) {
             existing['profile_pic'] = data;
             // Save back to localStorage
             localStorage.setItem('userInfo', JSON.stringify(existing));
+            setProfile_pic(data);
             window.location.reload();
         }).catch(error => {
-            setErr(error.response);
+            setErr(error.response && error.response.data.detail
+                ? error.response.data.detail
+                : "network error");
         })
 
     }
@@ -78,9 +81,10 @@ function ProfileScreen({ history }) {
 
             } else {
 
-                setFirstName(user.firstName)
-                setLastName(user.lastName)
-                setEmail(user.email)
+                setFirstName(user.firstName);
+                setLastName(user.lastName);
+                setEmail(user.email);
+                setProfile_pic(user.profile_pic);
             }
         }
 
@@ -107,7 +111,7 @@ function ProfileScreen({ history }) {
             <Row>
                 <Col md={2}>
 
-                    <Image src={`http://localhost:4000/${userInfo ? userInfo.profile_pic : null}`} width={140}
+                    <Image src={`http://localhost:4000/${profile_pic}`} width={140}
                         height={140} rounded />
 
                     <Form.Group controlId='profile pic'>

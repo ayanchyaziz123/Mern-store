@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -11,6 +11,7 @@ import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 
 
 function ProductEditScreen({ match, history }) {
@@ -51,6 +52,7 @@ function ProductEditScreen({ match, history }) {
                 setText_percentage(product.tax_percentage);
                 setCountInStock(product.countInStock);
                 setId(product._id);
+                setImage(product.image);
             }
         }
 
@@ -88,7 +90,8 @@ function ProductEditScreen({ match, history }) {
             }
 
             const { data } = await axios.post('http://localhost:4000/api/product/imageUpload', formData, config)
-            setImage(data)
+            setImage(data.image)
+            console.log("data ", data);
            
 
         } catch (error) {
@@ -101,9 +104,22 @@ function ProductEditScreen({ match, history }) {
             <Link to='/admin/productlist'>
                 Go Back
             </Link>
+            <h1>Edit Product</h1>
+            <Row>
+                <Col md={3}>
+                <Image src={`http://localhost:4000/${image}`} width={200}
+                                height={200} rounded />
+                                  <Form.Group controlId='image'>
+                                 <Form.File
+                                    id='image-file'
+                                    label='Choose File'
+                                    onChange={uploadFileHandler}
+                                >
 
-            <FormContainer>
-                <h1>Edit Product</h1>
+                                </Form.File>
+                                </Form.Group>
+                </Col>
+                <Col md={8}>
                 {loadingUpdate && <Loader />}
                 {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
 
@@ -167,13 +183,7 @@ function ProductEditScreen({ match, history }) {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.File
-                                    id='image-file'
-                                    label='Choose File'
-                                    onChange={uploadFileHandler}
-                                >
-
-                                </Form.File>
+                           
 
                             <Button type='submit' variant='primary'>
                                 Update
@@ -181,8 +191,9 @@ function ProductEditScreen({ match, history }) {
 
                         </Form>
                     )}
+                    </Col>
 
-            </FormContainer >
+</Row>
         </div>
 
     )

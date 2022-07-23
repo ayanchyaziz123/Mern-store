@@ -32,6 +32,9 @@ import {
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
+    USER_DETAILS_REQUEST_ADMIN,
+    USER_DETAILS_SUCCESS_ADMIN,
+    USER_DETAILS_FAIL_ADMIN,
 
     
 
@@ -160,6 +163,45 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: USER_DETAILS_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+
+export const getUserDetailsAdmin = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: USER_DETAILS_REQUEST_ADMIN
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(
+            `http://localhost:4000/api/user/userDetails/${id}`,
+            config
+        )
+
+        dispatch({
+            type: USER_DETAILS_SUCCESS_ADMIN,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: USER_DETAILS_FAIL_ADMIN,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,
@@ -309,8 +351,8 @@ export const updateUser = (user) => async (dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.put(
-            `/api/users/update/${user._id}/`,
+        const { data } = await axios.post(
+            `http://localhost:4000/api/user/updateUserByAdmin`,
             user,
             config
         )

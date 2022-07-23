@@ -43,13 +43,13 @@ function HomeScreen({ history }) {
         <div>
 
 
-                <Row>
-                    <Col md={12}>
-                        <ProductOffer2 />
-                    </Col>
-                </Row>
+            <Row>
+                <Col md={12}>
+                    <ProductOffer2 />
+                </Col>
+            </Row>
 
-       
+
 
             <Navs2 />
             <br></br>
@@ -57,15 +57,44 @@ function HomeScreen({ history }) {
 
 
 
-            <h4 className="mt-2">Latest Products</h4>
-            <a href="/admin/productlist/abcd">link</a>
+            <h5 className="mt-2">Filtering</h5>
             {loading ? <Loader />
                 : error ? <Message variant='danger'>{error}</Message>
                     :
                     <div className="pt-3">
                         <Row className='="p-2'>
                             <Col md={2}>
-                                <h1>Hello</h1>
+                                <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='top review dresses'
+                                    size="lg"
+                                />
+                                <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='latest'
+                                />
+                                   <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='top review dresses'
+                                />
+                                <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='latest'
+                                />
+                                   <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='top review dresses'
+                                />
+                                <Form.Check
+                                    type="checkbox"
+                                    id='default-checkbox'
+                                    label='latest'
+                                />
 
                             </Col>
                             <Col md={10}>

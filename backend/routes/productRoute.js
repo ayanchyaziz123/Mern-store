@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 var multer = require('multer');
 const checkLogIn = require('../middleware/checkLogIn');
+const isAdminCheck = require('../middleware/isAdminCheck');
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -21,11 +22,11 @@ const {createReview ,getProducts, createProduct, getProduct, imageUpload, update
 
 
 router.route('').get(getProducts);
-router.route('/createProduct').post(createProduct);
+router.route('/createProduct').post(isAdminCheck, createProduct);
 router.route('/getProduct/:id').get(getProduct); // for admin
 router.route('/imageUpload').post(upload.single('image'), imageUpload);
-router.route('/updateProduct/:id').put(updateProduct);
-router.route('/deleteProduct/:id').delete(deleteProduct);
+router.route('/updateProduct/:id').put(isAdminCheck, updateProduct);
+router.route('/deleteProduct/:id').delete(isAdminCheck, deleteProduct);
 router.route('/offerProduct').get(offerProduct);
 router.route('/:id/createReview').post(checkLogIn ,createReview);
 

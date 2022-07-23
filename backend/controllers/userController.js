@@ -90,7 +90,7 @@ exports.DeleteUser = async (request, response, next) => {
 
     }
 }
-exports.UpdateAdminUser = async (req, res, next) => {
+exports.UpdateUserByAdmin = async (req, res, next) => {
     try {
         const { userId, firstName, lastName, email, verified, isAdmin } = req.body;
         let user = {

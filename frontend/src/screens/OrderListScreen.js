@@ -16,7 +16,7 @@ function OrderListScreen({ history }) {
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
+     console.log("orders ", orders);
 
 
     useEffect(() => {

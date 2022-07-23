@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 var multer = require('multer');
 const checkLogIn = require('../middleware/checkLogIn');
+const isAdminCheck = require('../middleware/isAdminCheck');
 
-const {DPchangeByAdmin, UpdateUserDP, DeleteUser ,UpdateAdminUser ,GetAdminUser, UpdateUser, GetUser, getUsers ,SignUp, SignUp_verification, SignIn, ResetPassword, ResetPasswordVerification, UpdatePassword} = require('../controllers/userController');
+const {DPchangeByAdmin, UpdateUserDP, DeleteUser ,UpdateUserByAdmin ,GetAdminUser, UpdateUser, GetUser, getUsers ,SignUp, SignUp_verification, SignIn, ResetPassword, ResetPasswordVerification, UpdatePassword} = require('../controllers/userController');
 
 
 const fileStorageEngine = multer.diskStorage({
@@ -30,10 +31,10 @@ router.route('/resetPassword').post(ResetPassword);
 router.route('/resetPassword_verification/:id/:token').get(ResetPasswordVerification);
 router.route('/updatePassword/:id/:token').put(UpdatePassword)
 router.route('/updateUser').post(checkLogIn ,UpdateUser);
-router.route('/updateAdminUser').post(upload.single('image'), UpdateAdminUser);
+router.route('/updateUserByAdmin').post(isAdminCheck, UpdateUserByAdmin);
 router.route('/deleteUser/:id').delete(DeleteUser);
 router.route('/DPchange').post(upload.single('profile_pic'),checkLogIn, UpdateUserDP);
-router.route('/DPchangeByAdmin').post(upload.single('profile_pic'),checkLogIn, DPchangeByAdmin);
+router.route('/DPchangeByAdmin').post(upload.single('profile_pic'),isAdminCheck, DPchangeByAdmin);
 
 
 module.exports = router;
