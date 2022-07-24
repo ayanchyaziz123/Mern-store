@@ -108,8 +108,10 @@ exports.createProduct = async (req, res, next) => {
             tax_percentage: 0
         });
         const saveProduct = await newProduct.save();
+        const categories = await Category.find();
         return res.status(200).json({
             product: saveProduct,
+            categories: categories
         })
 
     }
@@ -151,13 +153,16 @@ exports.updateProduct = async (req, res, next) => {
             countInStock: countInStock,
             tax_percentage: tax_percentage
         }
+        const categories = await Category.find();
         var id = mongoose.Types.ObjectId(req.params.id)
         const filter = { _id: id }
         let updateProduct = await Product.findOneAndUpdate(filter, pro, {
             new: true
         });
         return res.status(200).json({
-            "product": updateProduct,
+            product: updateProduct,
+            categories: categories
+            
         })
 
     }
