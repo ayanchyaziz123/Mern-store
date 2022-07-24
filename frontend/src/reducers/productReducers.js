@@ -99,7 +99,8 @@ export const productDetailsReducer = (state = { product: [], reviews: [] }, acti
         case PRODUCT_DETAILS_SUCCESS:
             return { loading: false, 
                      product: action.payload.product,
-                     reviews: action.payload.reviews
+                     reviews: action.payload.reviews,
+                     categories: action.payload.categories
             }
 
         case PRODUCT_DETAILS_FAIL:
@@ -135,7 +136,7 @@ export const productCreateReducer = (state = {}, action) => {
             return { loading: true }
 
         case PRODUCT_CREATE_SUCCESS:
-            return { loading: false, success: true, product: action.payload.product }
+            return { loading: false, success: true, product: action.payload.product}
 
         case PRODUCT_CREATE_FAIL:
             return { loading: false, error: action.payload.error }

@@ -29,7 +29,7 @@ exports.imageUpload = async (req, res, next) => {
 
 exports.createReview = async (req, res, next) => {
     try {
-        const { rating, comment  } = req.body;
+        const { rating, comment } = req.body;
         const productId = mongoose.Types.ObjectId(req.params.id);
         const userId = req.userId;
         const review = new Review({
@@ -38,17 +38,19 @@ exports.createReview = async (req, res, next) => {
             rating: rating,
             comment: comment
         });
-       await review.save();
-       await Product.findOneAndUpdate({_id:productId}, {$push: {
-        "review": review
-       }});
-       console.log("success");
-          // save and redirect...
+        await review.save();
+        await Product.findOneAndUpdate({ _id: productId }, {
+            $push: {
+                "review": review
+            }
+        });
+        console.log("success");
+        // save and redirect...
         const rev = await Review.find({ product: productId }).populate('user');
         return res.status(200).json({
             "review": rev
         });
-          
+
     }
     catch (error) {
         console.log(error)
@@ -96,6 +98,7 @@ exports.deleteProduct = async (req, res, next) => {
 
 
 exports.createProduct = async (req, res, next) => {
+    console.log("hello");
     try {
         const newProduct = new Product({
             name: 'Sample Category',
@@ -106,7 +109,7 @@ exports.createProduct = async (req, res, next) => {
         });
         const saveProduct = await newProduct.save();
         return res.status(200).json({
-            "product": saveProduct,
+            product: saveProduct,
         })
 
     }
@@ -120,11 +123,13 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getProduct = async (req, res, next) => {
     try {
-        const product = await Product.findById(_id = req.params.id).populate('review');
+        const product = await Product.findById(_id = req.params.id).populate('review').populate('category');
         const reviews = await Review.find({ product: product._id }).populate('user');
+        const categories = await Category.find();
         return res.status(200).json({
-            "product": product,
-            "reviews": reviews
+            product: product,
+            reviews: reviews,
+            categories: categories
         })
     }
     catch (error) {
@@ -137,8 +142,9 @@ exports.getProduct = async (req, res, next) => {
 
 exports.updateProduct = async (req, res, next) => {
     try {
-        const { name, price, countInStock, tax_percentage, description } = req.body;
+        const { name, price, countInStock, tax_percentage, description, catId } = req.body;
         const pro = {
+            category: catId,
             name: name,
             description: description,
             price: price,

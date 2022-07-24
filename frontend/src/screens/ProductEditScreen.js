@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col, Image } from 'react-bootstrap'
+import { Label, Input, FormText, FormGroup } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -18,6 +19,8 @@ function ProductEditScreen({ match, history }) {
 
     const productId = match.params.id
 
+   const [category, setCategory] = useState('');
+    const [catId, setCatId] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(null);
@@ -29,19 +32,23 @@ function ProductEditScreen({ match, history }) {
     const dispatch = useDispatch()
 
     const productDetails = useSelector(state => state.productDetails)
-    const { error, loading, product } = productDetails
+    const { error, loading, product, categories } = productDetails
 
     const productUpdate = useSelector(state => state.productUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = productUpdate
 
-    useEffect(() => {
+    const handleCategory = (e) =>{
+        setCatId(e.target.value);
+        console.log(e.target.value);
+    }
 
+    useEffect(() => {
         if (successUpdate) {
             dispatch({ type: PRODUCT_UPDATE_RESET })
 
             history.push('/admin/productlist')
         } else {
-            const flag = product &&  product._id && product._id=== productId ? 'yes' : 'no';
+            const flag = product && product._id && product._id === productId ? 'yes' : 'no';
             console.log(typeof product._id, ' ', typeof productId)
             if (!product.name || flag === 'no') {
                 dispatch(listProductDetails(productId))
@@ -53,12 +60,14 @@ function ProductEditScreen({ match, history }) {
                 setCountInStock(product.countInStock);
                 setId(product._id);
                 setImage(product.image);
+                setCatId(product.category ? product.category._id : null)
+                setCategory(product.category ? product.category.name : null)
             }
         }
 
 
 
-    }, [dispatch, product, productId, history, successUpdate])
+    }, [dispatch, product, productId, history, successUpdate, categories])
 
     const submitHandler = (e) => {
         const data = {
@@ -67,7 +76,8 @@ function ProductEditScreen({ match, history }) {
             description: description,
             price: price,
             tax_percentage: tax_percentage,
-            countInStock: countInStock
+            countInStock: countInStock,
+            catId: catId
         }
         e.preventDefault()
         dispatch(updateProduct(data, product._id))
@@ -92,10 +102,10 @@ function ProductEditScreen({ match, history }) {
             const { data } = await axios.post('http://localhost:4000/api/product/imageUpload', formData, config)
             setImage(data.image)
             console.log("data ", data);
-           
+
 
         } catch (error) {
-            
+
         }
     }
 
@@ -107,93 +117,113 @@ function ProductEditScreen({ match, history }) {
             <h1>Edit Product</h1>
             <Row>
                 <Col md={3}>
-                <Image src={`http://localhost:4000/${image}`} width={200}
-                                height={200} rounded />
-                                  <Form.Group controlId='image'>
-                                 <Form.File
-                                    id='image-file'
-                                    label='Choose File'
-                                    onChange={uploadFileHandler}
-                                >
+                    <Image src={`http://localhost:4000/${image}`} width={200}
+                        height={200} rounded />
+                    <Form.Group controlId='image'>
+                        <Form.File
+                            id='image-file'
+                            label='Choose File'
+                            onChange={uploadFileHandler}
+                        >
 
-                                </Form.File>
-                                </Form.Group>
+                        </Form.File>
+                    </Form.Group>
                 </Col>
                 <Col md={8}>
-                {loadingUpdate && <Loader />}
-                {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+                    {loadingUpdate && <Loader />}
+                    {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
 
-                {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
-                    : (
+                    {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
+                        : (
 
-                        <Form onSubmit={submitHandler}>
-                            <Form.Group controlId='name'>
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
+                            <Form onSubmit={submitHandler}>
 
-                                    type='name'
-                                    placeholder='Enter name'
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId='description'>
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control
 
-                                    type='name'
-                                    placeholder='Enter description'
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId='price'>
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control
+                                <FormGroup>
+                                <Label for="exampleSelect">Current category : {category}</Label>
+                                <br></br>
+                                    <Label for="exampleSelect">Select A category</Label>
+                                    <Input type="select" name="select" id="exampleSelect" onChange={handleCategory}>
+                                        {
+                                            categories && categories.map((val, ind)=>{
+                                                return(
+                                                    <>
+                                                     <option value={val._id}>{val.name}</option>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                       
+                                    </Input>
+                                </FormGroup>
 
-                                    type='number'
-                                    placeholder='Enter price'
-                                    value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId='countinstock'>
-                                <Form.Label>Stock</Form.Label>
-                                <Form.Control
+                                <Form.Group controlId='name'>
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control
 
-                                    type='number'
-                                    placeholder='Enter stock'
-                                    value={countInStock}
-                                    onChange={(e) => setCountInStock(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId='countinstock'>
-                                <Form.Label>Tax</Form.Label>
-                                <Form.Control
+                                        type='name'
+                                        placeholder='Enter name'
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group controlId='description'>
+                                    <Form.Label>Description</Form.Label>
+                                    <Form.Control
 
-                                    type='number'
-                                    placeholder='Enter Tax'
-                                    value={tax_percentage}
-                                    onChange={(e) => setText_percentage(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
+                                        type='name'
+                                        placeholder='Enter description'
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group controlId='price'>
+                                    <Form.Label>Price</Form.Label>
+                                    <Form.Control
 
-                           
+                                        type='number'
+                                        placeholder='Enter price'
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group controlId='countinstock'>
+                                    <Form.Label>Stock</Form.Label>
+                                    <Form.Control
 
-                            <Button type='submit' variant='primary'>
-                                Update
-                            </Button>
+                                        type='number'
+                                        placeholder='Enter stock'
+                                        value={countInStock}
+                                        onChange={(e) => setCountInStock(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group controlId='countinstock'>
+                                    <Form.Label>Tax</Form.Label>
+                                    <Form.Control
 
-                        </Form>
-                    )}
-                    </Col>
+                                        type='number'
+                                        placeholder='Enter Tax'
+                                        value={tax_percentage}
+                                        onChange={(e) => setText_percentage(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
 
-</Row>
+
+
+                                <Button type='submit' variant='primary'>
+                                    Update
+                                </Button>
+
+                            </Form>
+                        )}
+                </Col>
+
+            </Row>
         </div>
 
     )
