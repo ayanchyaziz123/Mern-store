@@ -11,7 +11,6 @@ import { listProductDetails, createProductReview } from '../actions/productActio
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import ReactImageMagnify from 'react-image-magnify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import Coupon from '../components/Coupon';
 import axios from 'axios';
 import ProductChart from '../components/ProductChart';
 

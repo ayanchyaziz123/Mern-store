@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
 const Review = require('../models/review');
+const Category = require('../models/category');
 
 
 
@@ -149,7 +150,6 @@ exports.updateProduct = async (req, res, next) => {
         let updateProduct = await Product.findOneAndUpdate(filter, pro, {
             new: true
         });
-        console.log("Success!!!!!!!")
         return res.status(200).json({
             "product": updateProduct,
         })
@@ -171,6 +171,8 @@ exports.updateProduct = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
     let k = req.query.keyword;
     let p = req.query.page;
+    const categories = await Category.find();
+    console.log(categories);
     try {
         if (k == undefined && p == undefined) {
             const page = 1;
@@ -184,6 +186,7 @@ exports.getProducts = async (req, res, next) => {
                     success: true,
                     count: products.length,
                     products,
+                    categories,
                     pages,
                     page
                 }
@@ -202,6 +205,7 @@ exports.getProducts = async (req, res, next) => {
                     success: true,
                     count: products.length,
                     products,
+                    categories,
                     pages,
                     page
                 }
@@ -232,6 +236,7 @@ exports.getProducts = async (req, res, next) => {
                     success: true,
                     count: products.length,
                     products,
+                    categories,
                     pages,
                     page
                 }

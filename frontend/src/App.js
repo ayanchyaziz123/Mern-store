@@ -17,18 +17,14 @@ import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
-import PricePredict from './screens/PricePredict'
 import TopReviewProductScreen from './screens/TopReviewProductScreen'
 import Contact from './screens/ContactScreen'
-import CompareScreen from './screens/CompareScreen'
 import PriceRangeScreen from './screens/PriceRangeScreen'
 import DashboardScreen from './screens/DashboardScreen'
-import Header2 from './components/Header2';
-import OTPScreen from './screens/OTPScreen';
 import RegisterScreen2 from './screens/auth/RegisterScreen2'
 import ResetPassword from './screens/auth/ResetPassword';
 import AdminContactScreen from './screens/AdminContactScreen';
-import BrandScreen from './screens/BrandScreen';
+import CategoryScreen from './screens/CategoryScreen';
 import EmailVerifyScreen from './screens/auth/EmailVerifyScreen'
 import ConfirmPassword from './screens/auth/ConfirmPassword'
 
@@ -51,8 +47,7 @@ function App() {
         <Route path='/api/user/verify/:id/:token' component={EmailVerifyScreen} />
         <Route path='/reset_password' component={ResetPassword} />
           <Route path='/profile' component={ProfileScreen} />
-          <Route path='/otp_screen' component={OTPScreen} />  
-          <Route path='/compare' component={CompareScreen} />
+         
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/placeorder' component={PlaceOrderScreen} />
           <Route path='/order/:id' component={OrderScreen} />
@@ -67,13 +62,12 @@ function App() {
           <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
 
           <Route path='/admin/orderlist' component={OrderListScreen} />
-          <Route path='/pricePredict' component={PricePredict} />
           <Route path='/topReviewProductScreen' component={TopReviewProductScreen}/>
           <Route path='/contact' component={Contact}/>
           <Route path='/priceRange' component={PriceRangeScreen} />
           <Route path='/dashboard' component={DashboardScreen} />
         <Route path='/admin/contact' component={AdminContactScreen} />
-        <Route path="/brand" component={BrandScreen} />
+        <Route path="/category" component={CategoryScreen} />
         </Container>
           
       

@@ -5,18 +5,12 @@ import Product from '../components/Product'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
-import { listProducts, listCoupons } from '../actions/productActions'
-import ProductOffer from '../components/ProductOffer'
+import { listProducts } from '../actions/productActions'
 import ProductOffer2 from '../components/ProductOffer2'
 import Navs from '../components/Navs'
 import Navs2 from '../components/Navs2'
-import CompareProduct from '../components/CompareProduct'
-import ProductCarousel from '../components/ProductCarousel'
-import SearchRAM from '../components/SearchRam'
-import Coupon from '../components/Coupon'
-import SearchSlider from '../components/SearchSlider'
-import CoinTable from '../components/CoinTable'
-import SearchBrand from '../components/SearchBrand'
+import Category from '../components/Category'
+
 
 
 
@@ -26,13 +20,9 @@ function HomeScreen({ history }) {
     const productList = useSelector(state => state.productList)
 
 
-    const { error, loading, products, page, pages } = productList
+    const { error, loading, products, categories, page, pages } = productList
 
     let keyword = history.location.search
-
-
-
-
 
     useEffect(() => {
         dispatch(listProducts(keyword))
@@ -45,25 +35,22 @@ function HomeScreen({ history }) {
 
             <Row>
                 <Col md={12}>
-                    <ProductOffer2 />
+                    <ProductOffer2 products={products}/>
+                </Col>
+                <Col md={12}>
+                    <Category categories={categories} />
                 </Col>
             </Row>
 
 
 
-            <Navs2 />
-            <br></br>
-            <Navs />
-
-
-
-            <h5 className="mt-2">Filtering</h5>
+            <h5 className="mt-5 mb-3 text-center">latest product for you</h5>
             {loading ? <Loader />
                 : error ? <Message variant='danger'>{error}</Message>
                     :
                     <div className="pt-3">
                         <Row className='="p-2'>
-                            <Col md={2}>
+                            {/* <Col md={2}>
                                 <Form.Check
                                     type="checkbox"
                                     id='default-checkbox'
@@ -96,8 +83,8 @@ function HomeScreen({ history }) {
                                     label='latest'
                                 />
 
-                            </Col>
-                            <Col md={10}>
+                            </Col> */}
+                            <Col md={12}>
 
 
                                 <Row>

@@ -6,25 +6,16 @@ import { Carousel } from 'react-responsive-carousel';
 import {Container} from 'react-bootstrap';
 import Loader from './Loader'
 import Message from './Message'
-import { listOfferProducts } from '../actions/productActions'
 
-function ProductOffer2() {
-    const dispatch = useDispatch()
+function ProductOffer2({products}) {
 
-    const productOfferRated = useSelector(state => state.productOfferRated)
-    const { error, loading, products } = productOfferRated
+    
 
-    useEffect(() => {
-        dispatch(listOfferProducts())
-    }, [dispatch])
 
-    return (loading ? <Loader />
-        : error
-            ? <Message variant='danger'>{error}</Message>
-            : (<div className="bg-primary">
+    return (<div className="bg-primary">
                 <Carousel  autoPlay="true" infiniteLoop="true" useKeyboardArrows="true"  interval="1000" stopOnHover="true" className="br" >
                     
-                    {products.map(product => (
+                    {products && products.map(product => (
                         <Link to={`/product/${product._id}`}>
 
                         <div >
@@ -40,7 +31,6 @@ function ProductOffer2() {
         
                 </Carousel>
             </div>
-            )
 
     )
 }

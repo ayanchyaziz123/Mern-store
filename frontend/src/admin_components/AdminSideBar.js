@@ -49,10 +49,10 @@ const SideBar = (history) => {
                     <NavLink
                         className="navbar-item h5 font-weight-bold ml-3 text-white"
                         activeClassName="is-active"
-                        to="/brand"
+                        to="/category"
                         exact
                     >
-                        <i class="fab fa-bandcamp"></i> Brands
+                        <i class="fab fa-bandcamp"></i> Category
                     </NavLink>
                 </Nav.Item>
                 <hr></hr>

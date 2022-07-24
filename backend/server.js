@@ -33,6 +33,7 @@ app.use(cors({ origin: true, credentials: true }));
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');
 const order = require('./routes/orderRoute');
+const category = require('./routes/categoryRoute');
 
 
 
@@ -49,6 +50,20 @@ app.use('/api/product', product);
 // API for users
 app.use('/api/order', order);
 
+// API for users
+app.use('/api/category', category);
+
+
+const  errorHandler = (err, req, res, next) => {
+    if(res.headersSent)
+    {
+        return next(err);
+    }
+    res.status(500).json({
+        detail: err
+    })
+}
+app.use(errorHandler);
 
 
 app.get('/', (req, res) => {

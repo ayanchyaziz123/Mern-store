@@ -12,8 +12,7 @@ const checkLogIn = async (req, res, next) =>{
     }
     catch(error)
     {
-        next("authentication failed");
-
+        next("authentication failed.. please log in again!");
     }
 };
 
