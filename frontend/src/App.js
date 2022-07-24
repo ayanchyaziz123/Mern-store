@@ -27,6 +27,7 @@ import AdminContactScreen from './screens/AdminContactScreen';
 import CategoryScreen from './screens/CategoryScreen';
 import EmailVerifyScreen from './screens/auth/EmailVerifyScreen'
 import ConfirmPassword from './screens/auth/ConfirmPassword'
+import HomeCategoryScreen from './screens/HomeCategoryScree'
 
 
 
@@ -40,6 +41,7 @@ function App() {
       <main className="py-3 mt-5 ">
         <Container>
           <Route path='/' component={HomeScreen} exact />
+          <Route path='/cat_home/:id' component={HomeCategoryScreen}  />
           <Route path='/login' component={LoginScreen} />
           <Route path='/api/user/password/verify/:id/:token' component={ConfirmPassword} />
           <Route path='/register' component={RegisterScreen} />

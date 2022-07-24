@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
 import { Row, Col, Image, ListGroup, Button, Card, Form, Modal } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProductDetails, createProductReview } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
-import ReactImageMagnify from 'react-image-magnify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import axios from 'axios';
-import ProductChart from '../components/ProductChart';
+
 
 const baseURL = "http://127.0.0.1:8000/api/products/predict_history_price/";
 
@@ -31,7 +28,7 @@ function ProductScreen({ match, history }) {
     const dispatch = useDispatch()
 
     const productDetails = useSelector(state => state.productDetails)
-    const { loading, error, product, price_history, reviews } = productDetails
+    const { loading, error, product, reviews } = productDetails
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -71,6 +68,7 @@ function ProductScreen({ match, history }) {
         }
         ))
     }
+    console.log("Product ", product);
 
     return (
         <div>
@@ -129,7 +127,7 @@ function ProductScreen({ match, history }) {
                                         <ListGroup.Item>
                                             <p>Name: {product.name}</p>
                                             <hr></hr>
-                                            <p>Category: {product.category}</p>
+                                            <p>Category: {product.category.name}</p>
                                             <hr></hr>
                                            
                                         </ListGroup.Item>

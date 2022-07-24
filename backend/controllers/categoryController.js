@@ -1,5 +1,26 @@
 const Category = require('../models/category');
 const mongoose = require('mongoose');
+const Product = require('../models/product');
+
+
+exports.getFilterCategories = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const products = await Product.find({ category: id }).populate('review');
+
+        return res.status(200).json({
+            message: "category loaded Successfully",
+            products: products
+        })
+
+    }
+    catch (error) {
+        return res.status(500).json({
+            detail: "server error"
+        })
+    }
+}
+
 
 exports.createCategory = async (req, res, next) => {
     try {
@@ -93,7 +114,7 @@ exports.updateCategory = async (req, res, next) => {
                 image: req.file.filename
             }
         }
-        else{
+        else {
             cat = {
                 name,
                 description

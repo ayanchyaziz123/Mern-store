@@ -126,6 +126,7 @@ exports.createProduct = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
     try {
         const product = await Product.findById(_id = req.params.id).populate('review').populate('category');
+        console.log("Pr ", product);
         const reviews = await Review.find({ product: product._id }).populate('user');
         const categories = await Category.find();
         return res.status(200).json({

@@ -49,48 +49,15 @@ function HomeScreen({ history }) {
                 : error ? <Message variant='danger'>{error}</Message>
                     :
                     <div className="pt-3">
-                        <Row className='="p-2'>
-                            {/* <Col md={2}>
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='top review dresses'
-                                    size="lg"
-                                />
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='latest'
-                                />
-                                   <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='top review dresses'
-                                />
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='latest'
-                                />
-                                   <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='top review dresses'
-                                />
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='latest'
-                                />
-
-                            </Col> */}
+                        <Row className='="p-2 bg-white'>
+                           
                             <Col md={12}>
 
 
                                 <Row>
 
                                     {products.map(product => (
-                                        <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
+                                        <Col className="m-0 p-0" key={product._id} sm={12} md={6} lg={4} xl={3} >
                                             <Product product={product} />
                                         </Col>
                                     ))}

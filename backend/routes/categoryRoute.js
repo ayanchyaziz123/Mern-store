@@ -4,7 +4,7 @@ var multer = require('multer');
 const isAdminCheck = require('../middleware/isAdminCheck');
 
 
-const {updateCategory, deleteCategory, getCategory, getAllCategories, createCategory} = require('../controllers/categoryController');
+const {getFilterCategories, updateCategory, deleteCategory, getCategory, getAllCategories, createCategory} = require('../controllers/categoryController');
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -27,6 +27,8 @@ router.route('/getAllCategories').get(isAdminCheck ,getAllCategories);
 router.route('/getCategory/:id').get(isAdminCheck, getCategory);
 router.route('/deleteCategory/:id').delete(isAdminCheck, deleteCategory);
 router.route('/updateCategory/:id').put(upload.single('image'), updateCategory);
+router.route('/getFilterCategories/:id').get(getFilterCategories);
+
 
 
 

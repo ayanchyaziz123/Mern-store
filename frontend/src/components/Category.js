@@ -16,12 +16,12 @@ const Category = ({ categories }) => {
 
                                 <div className="card text-center">
 
-                                    <Link to={`/product/${val._id}`}>
+                                    <Link to={`/cat_home/${val._id}`}>
                                         <Card.Img src={`http://localhost:4000/${val.image}`} style={{maxHeight: '80px', maxWidth: '80px', minHeight: '80px', minWidth: '80px'}} className="mt-1"/>
                                     </Link>
 
                                     <Card.Body >
-                                        <Link to={`/product/${val._id}`} >
+                                        <Link to={`/cat_home/${val._id}`} >
                                             <Card.Title as="div" >
                                                 <strong >{val.name}</strong>
                                             </Card.Title>
