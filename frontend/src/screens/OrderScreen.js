@@ -38,6 +38,8 @@ function OrderScreen({ match, history }) {
         script.type = 'text/javascript'
         script.src = 'https://www.paypal.com/sdk/js?client-id=AeDXja18CkwFUkL-HQPySbzZsiTrN52cG13mf9Yz7KiV2vNnGfTDP0wDEN9sGlhZHrbb_USawcJzVDgn'
         script.async = true
+        console.log("hello success")
+     
         script.onload = () => {
             setSdkReady(true)
         }
@@ -45,17 +47,17 @@ function OrderScreen({ match, history }) {
     }
 
     useEffect(() => {
-
+       
         if (!userInfo) {
             history.push('/login')
         }
-
-        if (!order || successPay || order._id !== Number(orderId) || successDeliver) {
+ 
+        if (!order || successPay || order.order._id !== orderId || successDeliver) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
 
             dispatch(getOrderDetails(orderId))
-        } else if (!order.isPaid) {
+        } else if (order && !order.order.isPaid) {
             if (!window.paypal) {
                 addPayPalScript()
             } else {
@@ -70,9 +72,8 @@ function OrderScreen({ match, history }) {
     }
 
     const deliverHandler = () => {
-        dispatch(deliverOrder(order))
+        dispatch(deliverOrder(order.order))
     }
-    console.log("orders ", order);
 
     return loading ? (
         <Loader />
@@ -187,28 +188,29 @@ function OrderScreen({ match, history }) {
                                    
 
 
-                                    {/* {!order.order.isPaid && (
+                                    {order && order.order && order.order.isPaid ? null : (
                                         <ListGroup.Item>
+                                           
                                             {loadingPay && <Loader />}
 
                                             {!sdkReady ? (
-                                                <Loader />
+                                                <>
+                                                  <Loader />
+                                                </>
+                                              
                                             ) : (
                                                     <PayPalButton
-                                                        amount={order.totalPrice}
+                                                        amount={order.order.totalPrice}
                                                         onSuccess={successPaymentHandler}
                                                     />
                                                 )}
                                         </ListGroup.Item>
-                                    )} */}
-                                     <PayPalButton
-                                                        amount={order.totalPrice}
-                                                        onSuccess={successPaymentHandler}
-                                                    />
+                                    ) }
+                                
                     
                                 </ListGroup>
                                 {loadingDeliver && <Loader />}
-                                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                {userInfo && userInfo.isAdmin  && !order.order.isDelivered && (
                                     <ListGroup.Item>
                                         <Button
                                             type='button'

@@ -11,6 +11,56 @@ const user = require('../models/user');
 
 
 
+exports.orderPaid= async (req, res, next) =>{
+    try{
+        const pay = {
+            isPaid: true,
+            paidAt: Date.now(),
+        }
+        var id = mongoose.Types.ObjectId(req.params.id)
+        const filter = { _id: id }
+        let updateOrder = await Order.findOneAndUpdate(filter, pay, {
+            new: true
+        });
+        return res.status(200).json({
+            order: updateOrder,
+            message: "Order was paid"
+        })
+    }
+    catch(error)
+    {
+        return res.status(400).json({
+            detail: "serevr error",
+        })
+    }
+}
+
+exports.orderDeliver = async (req, res, next) =>{
+    try{
+        const ord = {
+            isDelivered: true,
+            deliveredAt: Date.now(),
+        }
+        var id = mongoose.Types.ObjectId(req.params.id)
+        const filter = { _id: id }
+        let updateOrder = await Order.findOneAndUpdate(filter, ord, {
+            new: true
+        });
+        return res.status(200).json({
+            order: updateOrder,
+            message: "Order was handed over"
+        })
+    }
+    catch(error)
+    {
+        return res.status(400).json({
+            detail: "serevr error",
+        })
+    }
+}
+
+
+
 
 exports.allOrders = async (req, res, next) =>{
     try{
@@ -89,7 +139,9 @@ exports.createOrder = async (req, res, next) => {
             paymentMethod: paymentMethod,
             taxPrice: taxPrice,
             shippingPrice: shippingPrice,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            isPaid: false,
+            isDelivered: false,
         });
         await order.save();
 
