@@ -28,6 +28,7 @@ function ProductEditScreen({ match, history }) {
     const [countInStock, setCountInStock] = useState(null);
     const [image, setImage] = useState(null);
     const [id, setId] = useState(null);
+    const [brand, setBrand] = useState('');
 
     const dispatch = useDispatch()
 
@@ -62,6 +63,7 @@ function ProductEditScreen({ match, history }) {
                 setImage(product.image);
                 setCatId(product.category ? product.category._id : null)
                 setCategory(product.category ? product.category.name : null)
+                setBrand(product.brand && product.brand);
             }
         }
 
@@ -77,7 +79,8 @@ function ProductEditScreen({ match, history }) {
             price: price,
             tax_percentage: tax_percentage,
             countInStock: countInStock,
-            catId: catId
+            catId: catId,
+            brand: brand
         }
         e.preventDefault()
         dispatch(updateProduct(data, product._id))
@@ -156,6 +159,18 @@ function ProductEditScreen({ match, history }) {
                                        
                                     </Input>
                                 </FormGroup>
+
+                                <Form.Group controlId='brand'>
+                                    <Form.Label>Brand</Form.Label>
+                                    <Form.Control
+
+                                        type='name'
+                                        placeholder='Enter brand'
+                                        value={brand}
+                                        onChange={(e) => setBrand(e.target.value)}
+                                    >
+                                    </Form.Control>
+                                </Form.Group>
 
                                 <Form.Group controlId='name'>
                                     <Form.Label>Name</Form.Label>

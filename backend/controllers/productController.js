@@ -98,14 +98,15 @@ exports.deleteProduct = async (req, res, next) => {
 
 
 exports.createProduct = async (req, res, next) => {
-    console.log("hello");
     try {
         const newProduct = new Product({
+            brand: 'sample brand',
             name: 'Sample Category',
             description: 'Samle Description',
             price: 0,
             countInStock: 0,
             tax_percentage: 0
+
         });
         const saveProduct = await newProduct.save();
         const categories = await Category.find();
@@ -145,14 +146,15 @@ exports.getProduct = async (req, res, next) => {
 
 exports.updateProduct = async (req, res, next) => {
     try {
-        const { name, price, countInStock, tax_percentage, description, catId } = req.body;
+        const { name, price, countInStock, tax_percentage, description, catId, brand } = req.body;
         const pro = {
             category: catId,
             name: name,
             description: description,
             price: price,
             countInStock: countInStock,
-            tax_percentage: tax_percentage
+            tax_percentage: tax_percentage,
+            brand: brand
         }
         const categories = await Category.find();
         var id = mongoose.Types.ObjectId(req.params.id)

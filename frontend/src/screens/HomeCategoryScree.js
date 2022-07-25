@@ -3,13 +3,17 @@ import axios from "axios";
 import { Card, Col, Row, Form } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import { Link } from 'react-router-dom';
+import CheckBoxBrand from '../components/CeckBoxBrand';
+import MinimumDistanceSlider from '../components/PriceRangeSlider';
 
 const HomeCategoryScreen = ({ match }) => {
     const id = match.params.id;
     const [products, setProducts] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const baseURL = `http://localhost:4000/api/category/getFilterCategories/${id}`;
+    var brand = ['asus', 'vivo', 'iphone'];
+    var price = [10, 40];
+    const baseURL = `http://localhost:4000/api/category/getFilterCategories/${id}/data?brand=${brand}&price=${price}`;
     console.log("products ", products);
     var total = products && products.review && products.review.length > 0 ? products.review.reduce((accum,item) => accum + item.rating, 0) : 0;
 
@@ -33,41 +37,10 @@ const HomeCategoryScreen = ({ match }) => {
     return (
         <>
             <Row>
-                <Col md={3}>
-                    <h4 className="mt-5">brand</h4>
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='rolex'
-                                    size="lg"
-                                />
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='DandG'
-                                />
-                                   <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='Buck Mashon'
-                                />
-                                 <h4 className="mt-5">size</h4>
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='L'
-                                    size="lg"
-                                />
-                                <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='X'
-                                />
-                                   <Form.Check
-                                    type="checkbox"
-                                    id='default-checkbox'
-                                    label='XL'
-                                />
+                <Col md={2} className="mr-1">    
+
+                                <CheckBoxBrand/>
+                                 <MinimumDistanceSlider/>
                               
 
                 </Col>

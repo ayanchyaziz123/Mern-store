@@ -5,9 +5,22 @@ const Product = require('../models/product');
 
 exports.getFilterCategories = async (req, res, next) => {
     try {
+        let brand = req.query.brand;
+        let price = req.query.price;
         const id = req.params.id;
-        const products = await Product.find({ category: id }).populate('review');
-
+        var arrBrand = brand.split(',');
+        var arrPrice = price.split(',');
+        
+      
+        var products;
+        if(brand == undefined && price == undefined)
+        {
+            products = await Product.find({ category: id }).populate('review');
+        }
+        else{
+            products = await Product.find({ category: id }).populate('review');
+        }
+        
         return res.status(200).json({
             message: "category loaded Successfully",
             products: products
