@@ -3,22 +3,22 @@ const mongoose = require('mongoose');
 const Product = require('../models/product');
 
 
+
 exports.getFilterCategories = async (req, res, next) => {
     try {
         let brand = req.query.brand;
-        let price = req.query.price;
+        console.log("Brand ", brand);
         const id = req.params.id;
         var arrBrand = brand.split(',');
-        var arrPrice = price.split(',');
         
-      
         var products;
-        if(brand == undefined && price == undefined)
+        console.log("i am here");
+        if(brand == undefined || !brand)
         {
             products = await Product.find({ category: id }).populate('review');
         }
         else{
-            products = await Product.find({ category: id }).populate('review');
+            products = await Product.find({'brand': {$in:arrBrand}}).populate('review');
         }
         
         return res.status(200).json({

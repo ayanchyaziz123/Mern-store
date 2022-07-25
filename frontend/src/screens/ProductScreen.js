@@ -127,7 +127,7 @@ function ProductScreen({ match, history }) {
                                         <ListGroup.Item>
                                             <p>Name: {product.name}</p>
                                             <hr></hr>
-                                            <p>Category: {product.category.name}</p>
+                                            <p>Category: {product.category && product.category.name}</p>
                                             <hr></hr>
                                            
                                         </ListGroup.Item>

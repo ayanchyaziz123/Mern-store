@@ -79,7 +79,6 @@ exports.offerProduct = async (req, res, next) => {
 }
 
 exports.deleteProduct = async (req, res, next) => {
-    console.log("Delete product");
     try {
         const id = req.params.id;
         await Product.findByIdAndRemove(id);
