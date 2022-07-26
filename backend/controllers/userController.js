@@ -26,16 +26,17 @@ exports.DPchangeByAdmin = async (req, res, next) => {
             });
         }
         catch (error) {
-            console.log("error", error)
+            res.status(400).json({
+                detail: "an error happend"
+            })
         }
         return res.status(200).json({
             "message": "successfully dp change"
         });
     }
     catch (error) {
-        console.log(error)
         res.status(400).json({
-            "error": "an error happend"
+            detail: "an error happend"
         })
     }
 }
@@ -64,7 +65,7 @@ exports.UpdateUserDP = async (req, res, next) => {
     catch (error) {
         console.log(error)
         res.status(400).json({
-            "error": "an error happend"
+            detail: "an error happend"
         })
     }
 }
@@ -84,7 +85,7 @@ exports.DeleteUser = async (request, response, next) => {
     catch (error) {
         response.status(500).json(
             {
-                message: "server error"
+                detail: "server error"
             }
         )
 
@@ -428,10 +429,9 @@ exports.UpdatePassword = async (req, res, next) => {
             }
         ).catch(
             (error) => {
-                // res.status(400).json({
-                //     error: error
-                // });
-                console.log(error);
+                res.status(400).json({
+                    detail: "error happend"
+                });
             }
         );
 

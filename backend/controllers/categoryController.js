@@ -7,12 +7,10 @@ const Product = require('../models/product');
 exports.getFilterCategories = async (req, res, next) => {
     try {
         let brand = req.query.brand;
-        console.log("Brand ", brand);
         const id = req.params.id;
         var arrBrand = brand.split(',');
         
         var products;
-        console.log("i am here");
         if(brand == undefined || !brand)
         {
             products = await Product.find({ category: id }).populate('review');

@@ -21,7 +21,7 @@ function ProductOffer2({products}) {
                         <div >
                             
                             <img src={`http://localhost:4000/${product.image}`} />
-                            <p className="legend"> <h6 className="text-white">Top product {ind + 1} : {product.name} <br></br> price (${product.price})  </h6> </p>
+                            <p className="legend"> <h6 className="text-white">Top product {ind + 1} : {product.name} <br></br> price &#x9F3;({product.price})  </h6> </p>
                         
                         </div>
                         </Link>

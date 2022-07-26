@@ -3,7 +3,7 @@ import { Row, Col, Table, Button, InputGroup, FormControl, Form, Image } from 'r
 import axios from 'axios';
 import AdminSideBar from '../admin_components/AdminSideBar';
 import Message from '../components/Message';
-import Loader from 'react-loader-spinner';
+import Loaders from '../components/Loader';
 
 
 
@@ -123,17 +123,20 @@ const CategoryScreen = () => {
         }
 
     }
-    console.log("categories", categories)
-    useEffect(() => {
+
+    useEffect(async () => {
         try {
-            axios.get(baseURLgetAllCategories, config).then(res => {
+            setLoadding(true);
+            await axios.get(baseURLgetAllCategories, config).then(res => {
                 setCategories(res.data.categories);
                 setError('');
                 // setSuccess(res.data.message);
             })
+            setLoadding(false);
         }
         catch (error) {
             setSuccess('');
+            setLoadding(false);
             setError(error.response && error.response.data.detail
                 ? error.response.data.detail
                 : "network error");
@@ -159,7 +162,6 @@ const CategoryScreen = () => {
                 <Col>
                     {success && <Message variant='success'>{success}</Message>}
                     {error && <Message variant='danger'>{error}</Message>}
-                    {loading && <Loader />}
                     <form onSubmit={isUpdate == false ? handleCreate : handleUpdate}>
                         <Form.Group controlId='name'>
                             <Form.Label>Name</Form.Label>
@@ -207,6 +209,7 @@ const CategoryScreen = () => {
                     </form>
 
                     <hr></hr>
+                    {loading && <Loaders />}
                     <Table striped bordered hover size="sm">
                         <thead>
                             <tr>
