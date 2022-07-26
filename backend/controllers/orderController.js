@@ -38,6 +38,8 @@ exports.orderPaid= async (req, res, next) =>{
 exports.orderDeliver = async (req, res, next) =>{
     try{
         const ord = {
+            isPaid: true,
+            paidAt: Date.now(),
             isDelivered: true,
             deliveredAt: Date.now(),
         }
@@ -64,8 +66,7 @@ exports.orderDeliver = async (req, res, next) =>{
 
 exports.allOrders = async (req, res, next) =>{
     try{
-        const orders = await Order.find().populate('user');
-        console.log("orders ", orders)
+        const orders = await Order.find().sort({updatedAt:-1}).populate('user');
         return res.status(200).json({
             "orders": orders,
         })
@@ -82,7 +83,7 @@ exports.allOrders = async (req, res, next) =>{
 exports.myOrders = async (req, res, next) =>{
     try{
         const userId = req.userId;
-        const orders = await Order.find({user: userId});
+        const orders = await Order.find({user: userId}).sort({updatedAt:-1});
         return res.status(200).json({
             "orders": orders,
         })
@@ -125,8 +126,7 @@ exports.orderDetails = async (req, res, next) =>{
 
 
 exports.createOrder = async (req, res, next) => {
-    console.log(req.body);
-
+  
     try {
         const orderItems = req.body.orderItems;
         const shippingAddress = req.body.shippingAddress;
@@ -175,7 +175,7 @@ exports.createOrder = async (req, res, next) => {
                 new: true
             });
         }
-        console.log("Success")
+
         return res.status(200).json({
             "order": order,
             "message": "success"

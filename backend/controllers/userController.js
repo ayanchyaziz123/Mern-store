@@ -172,7 +172,6 @@ exports.GetUser = async (req, res, next) => {
     try {
         const id = req.userId;;
         const user = await User.findById(_id = id);
-        console.log("users is here2 => ", user);
         return res.status(200).json({
             "user": user,
             "message": "Profile Loaded!"
@@ -200,7 +199,7 @@ exports.GetAdminUser = async (req, res, next) => {
 
 exports.getUsers = async (req, res, next) => {
     try {
-        const users = await User.find();
+        const users = await User.find().sort({updatedAt:-1});
         return res.status(200).json({
             "users": users,
             "message": "Success"
