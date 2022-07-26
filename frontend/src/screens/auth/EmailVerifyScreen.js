@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import Message from "../../components/Message";
+
 
 const EmailVerifyScreen = ({match, history}) =>{
     const id = match.params.id;
@@ -15,6 +17,7 @@ const EmailVerifyScreen = ({match, history}) =>{
     {
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
         history.push('/')
+        window.location.reload();
     }
 
     useEffect(async () => {
@@ -34,9 +37,7 @@ const EmailVerifyScreen = ({match, history}) =>{
 
     return(
         <>
-        <p>{id} {token}</p>
-        {error ? <p>Error</p> : null}
-        <h1>This is email</h1>
+        {error && <Message variant='danger'>{error}</Message>}
         </>
     )
 }

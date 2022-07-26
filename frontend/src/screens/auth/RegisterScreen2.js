@@ -56,7 +56,9 @@ function RegisterScreen2({ location, history }) {
                 axios.post(baseURL, formData).then((response) => {
                     setMessage(response.data.message);
                     setSuccess(true);  
+                    setError('');
                 }).catch(error =>{
+                    setMessage('');
                     setError(error.response && error.response.data.detail
                         ? error.response.data.detail
                         : "network error");

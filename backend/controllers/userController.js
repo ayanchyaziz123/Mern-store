@@ -233,9 +233,9 @@ exports.SignUp = async (req, res, next) => {
             return res.status(400).json({ detail: "Not all fields have been entered." });
         }
         const existingUser = await User.findOne({ email: email });
-        if (existingUser) {
-            return res.status(400).json({ detail: 'This email address is already being used' })
-        }
+        // if (existingUser) {
+        //     return res.status(400).json({ detail: 'This email address is already being used' })
+        // }
 
 
         const salt = await bcrypt.genSalt();
@@ -282,17 +282,15 @@ exports.SignUp = async (req, res, next) => {
 exports.SignUp_verification = async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
-        if (!user) return res.status(400).json({ error: "Invalid Link" });
+        if (!user) return res.status(400).json({ detail: "Invalid Link" });
 
-        console.log('success-1');
 
         const token = await Token.findOne({
             userId: user._id,
             token: req.params.token,
         });
-        if (!token) return res.status(400).json({ error: "Invalid Link" });
+        if (!token) return res.status(400).json({ detail: "Invalid Link" });
 
-        console.log('success-2');
         const id = { _id: user._id };
         const update = { verified: true };
         let ver = await User.findOneAndUpdate(id, update, {
@@ -300,7 +298,6 @@ exports.SignUp_verification = async (req, res, next) => {
         });
         const us = await User.findOne({ _id: req.params.id });
         await Token.findByIdAndRemove(token._id);
-        console.log('success-3');
         const tkn = jwt.sign({
             email: user.email,
             userId: user._id
@@ -317,13 +314,12 @@ exports.SignUp_verification = async (req, res, next) => {
             profile_pic: user.profile_pic,
             token: tkn
         }
-        console.log('success');
         return res.status(200).json({
             "userInfo": user_info,
             "message": "Email verified Successfully"
         })
     } catch (error) {
-        res.status(400).send("An error occured");
+        res.status(400).json({ detail: "server error" });
     }
 
 }
@@ -361,7 +357,7 @@ exports.ResetPassword = async (req, res, next) => {
         });
     }
     catch (error) {
-        return res.status(200).json({ detail: "Server error happend" });
+        return res.status(400).json({ detail: "Server error happend" });
     }
 }
 
@@ -468,6 +464,7 @@ exports.SignIn = async (req, res, next) => {
         const { email, password } = req.body;
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) return res.status(400).json({ detail: "email does not exist" });
+        if (!existingUser.verified) return res.status(400).json({ detail: "email is not verified" });
         const isValidPassword = await bcrypt.compare(password, existingUser.password);
         if (!isValidPassword) return res.status(400).json({ detail: "password does not match" });
 
