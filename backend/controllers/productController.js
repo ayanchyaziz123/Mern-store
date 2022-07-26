@@ -184,7 +184,7 @@ exports.updateProduct = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
     let k = req.query.keyword;
     let p = req.query.page;
-    const categories = await Category.find();
+    const categories = await Category.find().limit(12);
     const top = await Product.find();
     var topProducts = [];
     for(let i in top)
