@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const mongoose = require('mongoose');
 const Review = require('../models/review');
 const Category = require('../models/category');
+const review = require('../models/review');
 
 
 
@@ -44,7 +45,7 @@ exports.createReview = async (req, res, next) => {
                 "review": review
             }
         });
-        console.log("success");
+    
         // save and redirect...
         const rev = await Review.find({ product: productId }).populate('user');
         return res.status(200).json({
@@ -185,7 +186,17 @@ exports.getProducts = async (req, res, next) => {
     let k = req.query.keyword;
     let p = req.query.page;
     const categories = await Category.find();
-    console.log(categories);
+    const top = await Product.find();
+    var topProducts = [];
+    for(let i in top)
+    {
+        if(top[i].review.length > 0)
+        {
+            topProducts.push(top[i]);
+        }
+    }
+
+   
     try {
         if (k == undefined && p == undefined) {
             const page = 1;
@@ -200,6 +211,7 @@ exports.getProducts = async (req, res, next) => {
                     count: products.length,
                     products,
                     categories,
+                    topProducts,
                     pages,
                     page
                 }
@@ -219,6 +231,7 @@ exports.getProducts = async (req, res, next) => {
                     count: products.length,
                     products,
                     categories,
+                    topProducts,
                     pages,
                     page
                 }
@@ -250,6 +263,7 @@ exports.getProducts = async (req, res, next) => {
                     count: products.length,
                     products,
                     categories,
+                    topProducts,
                     pages,
                     page
                 }

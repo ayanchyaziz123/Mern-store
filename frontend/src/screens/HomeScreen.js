@@ -20,7 +20,7 @@ function HomeScreen({ history }) {
     const productList = useSelector(state => state.productList)
 
 
-    const { error, loading, products, categories, page, pages } = productList
+    const { error, loading, products, categories, page, pages, topProducts } = productList
 
     let keyword = history.location.search
 
@@ -35,7 +35,7 @@ function HomeScreen({ history }) {
 
             <Row>
                 <Col md={12}>
-                    <ProductOffer2 products={products}/>
+                    <ProductOffer2 products={topProducts}/>
                 </Col>
                 <Col md={12}>
                     <Category categories={categories} />
