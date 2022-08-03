@@ -216,8 +216,8 @@ exports.SignUp = async (req, res, next) => {
 
 
     try {
-        const { firstName, lastName, email, password, password2 } = req.body;
-        if (password != password2) {
+        const { firstName, lastName, email, password, confirmPassword } = req.body;
+        if (password != confirmPassword) {
             return res.status(400).json({ detail: "Password did not match" });
         }
         if (password.length <= 7) {
@@ -233,9 +233,9 @@ exports.SignUp = async (req, res, next) => {
             return res.status(400).json({ detail: "Not all fields have been entered." });
         }
         const existingUser = await User.findOne({ email: email });
-        // if (existingUser) {
-        //     return res.status(400).json({ detail: 'This email address is already being used' })
-        // }
+        if (existingUser) {
+            return res.status(400).json({ detail: 'This email address is already being used' })
+        }
 
 
         const salt = await bcrypt.genSalt();
@@ -464,7 +464,7 @@ exports.SignIn = async (req, res, next) => {
         const { email, password } = req.body;
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) return res.status(400).json({ detail: "email does not exist" });
-        if (!existingUser.verified) return res.status(400).json({ detail: "email is not verified" });
+        // if (!existingUser.verified) return res.status(400).json({ detail: "email is not verified" });
         const isValidPassword = await bcrypt.compare(password, existingUser.password);
         if (!isValidPassword) return res.status(400).json({ detail: "password does not match" });
 
